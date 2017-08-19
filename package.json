@@ -1,0 +1,67 @@
+{
+  "name": "ink-table",
+  "version": "0.0.0",
+  "description": "A table component for Ink.",
+  "main": "dist/index.js",
+  "repository": "maticzav/ink-table",
+  "author": "Matic Zavadlal <matic.zavadlal@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "pretest": "npm run build",
+    "test": "xo && ava",
+    "build": "babel src --out-dir=dist",
+    "prepublish": "npm run build"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "cli",
+    "ink-cli",
+    "ink",
+    "select",
+    "ink-component",
+    "component"
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.10"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-es2015-node5": "^1.2.0",
+    "eslint-config-xo-react": "^0.13.0",
+    "eslint-plugin-react": "^7.2.1",
+    "eslint-plugin-xo": "^1.0.0",
+    "ink": "^0.3.1",
+    "xo": "^0.18.2"
+  },
+  "xo": {
+    "extends": "xo-react",
+    "parser": "babel-eslint",
+    "esnext": true,
+    "space": true,
+    "semicolon": false,
+    "rules": {
+      "new-cap": 0,
+      "complexity": 0,
+      "default-case": 0,
+      "react/no-unused-prop-types": 0
+    },
+    "settings": {
+      "react": {
+        "pragma": "h"
+      }
+    }
+  },
+  "ava": {
+    "babel": "inherit"
+  }
+}

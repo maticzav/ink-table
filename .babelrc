@@ -1,0 +1,14 @@
+{
+  "presets": ["es2015-node5"],
+  "plugins": [
+    ["transform-react-jsx", {
+      "pragma": "h",
+      "useBuiltIns": true
+    }],
+    ["transform-object-rest-spread",
+    {
+      "useBuiltIns": true
+    }],
+    ["add-module-exports"]
+  ]
+}

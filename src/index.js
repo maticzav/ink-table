@@ -1,5 +1,6 @@
 import {h, Text} from 'ink'
 import PropTypes from 'prop-types'
+import merge from 'merge'
 
 // Components ----------------------------------------------------------------
 
@@ -104,7 +105,8 @@ const line = (Cell, Skeleton, {line, left, right, cross, padding}) => cells => {
 // Table ---------------------------------------------------------------------
 
 const Table = ({data, config}) => {
-  const validConfig = Object.assign(defaultConfig, config)
+  const validConfig = merge.recursive(defaultConfig, config)
+
   const {header, cell, skeleton} = validConfig
   const {lines, corners, crosses, padding} = validConfig
 

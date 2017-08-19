@@ -1,5 +1,5 @@
 import {h, render} from 'ink'
-import Table from '../'
+import Table from '..'
 
 // Demo ----------------------------------------------------------------------
 
@@ -18,8 +18,15 @@ const data = [
   {name: 'Mendez Taylor', gender: 'male', company: 'DOGNOST', email: 'mendeztaylor@dognost.com', phone: '+1 (812) 544-2784', address: 'Willow Street, Basye, New York, 2300'}
 ]
 
+const config = {
+  padding: 3,
+  crosses: {
+    mid: '$'
+  }
+}
+
 const Basic = () => (
-  <Table data={data}/>
+  <Table data={data} config={config}/>
 )
 
 render(<Basic/>)

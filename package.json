@@ -1,6 +1,6 @@
 {
   "name": "ink-table",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A table component for Ink.",
   "main": "dist/index.js",
   "repository": "maticzav/ink-table",
@@ -22,7 +22,8 @@
     "cli",
     "ink-cli",
     "ink",
-    "select",
+    "table",
+    "ink-table",
     "ink-component",
     "component"
   ],

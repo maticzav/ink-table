@@ -17,14 +17,21 @@ const data = [
   {name: 'Gwen Schroeder', gender: 'female', age: 17, email: 'random@random.com'}
 ]
 
+const config = {
+  padding: 3,
+  crosses: {
+    mid: '$'
+  }
+}
+
 const Basic = () => (
-  <Table data={data}/>
+  <Table data={data} config={config}/>
 )
 
 render(<Basic/>)
 ```
 
-<img src="media/demo.jpeg" width="508">
+<img src="media/demo.png" width="508">
 
 
 ## Props

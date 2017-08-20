@@ -5,7 +5,7 @@ import merge from 'merge'
 // Components ----------------------------------------------------------------
 
 const Header = ({children}) => (
-  <Text red>{children}</Text>
+  <Text bold blue>{children}</Text>
 )
 
 Header.propTypes = {
@@ -25,7 +25,7 @@ Cell.defaultProps = {
 }
 
 const Skeleton = ({children}) => (
-  <Text white>{children}</Text>
+  <Text bold white>{children}</Text>
 )
 
 Skeleton.propTypes = {
@@ -65,7 +65,7 @@ const get = key => obj => obj[key]
 const length = el => el.length
 const isUndefined = v => v === undefined
 const not = func => (...args) => !func(...args)
-const toString = val => val.toString()
+const toString = val => (val || String()).toString()
 const isEmpty = el => el.length === 0
 
 const intersperse = val => vals => vals.reduce((s, c) => isEmpty(s) ? [c] : [...s, val, c], [])
@@ -90,6 +90,7 @@ const generateSkeleton = keys => copyToObject(() => '')(keys)
 
 const line = (Cell, Skeleton, {line, left, right, cross, padding}) => cells => {
   const fillWithLine = fillWith(line)
+
   const columns = cells.map(({width, value}) =>
     (<Cell key={value}>{line.repeat(padding)}{fillWithLine(width - padding)(toString(value))}</Cell>))
 
@@ -127,13 +128,13 @@ const Table = ({data, config}) => {
   const rows = data.map(d => row(getRow(d)))
 
   return (
-    <div>
+    <span>
       {topLine(emptyRow)}
       {headers(headersRow)}
       {midLine(emptyRow)}
       {intersperse(midLine(emptyRow))(rows)}
       {bottomLine(emptyRow)}
-    </div>
+    </span>
   )
 }
 
@@ -173,5 +174,6 @@ Table.defaultProps = {
 // Exports -------------------------------------------------------------------
 
 export default Table
+export {Header, Cell, Skeleton}
 
 // ---------------------------------------------------------------------------

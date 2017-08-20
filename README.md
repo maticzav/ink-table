@@ -31,7 +31,7 @@ const Basic = () => (
 render(<Basic/>)
 ```
 
-<img src="media/demo.png" width="508">
+<img src="media/demo.png" width="720">
 
 
 ## Props

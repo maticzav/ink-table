@@ -1,6 +1,5 @@
 import {h, Text} from 'ink'
 import PropTypes from 'prop-types'
-import merge from 'merge'
 
 // Components ----------------------------------------------------------------
 
@@ -32,33 +31,6 @@ Skeleton.propTypes = {
   children: PropTypes.any.isRequired
 }
 
-// Config --------------------------------------------------------------------
-
-const defaultConfig = {
-  padding: 1,
-  lines: {
-    empty: ' ',
-    vertical: '│',
-    horizontal: '─'
-  },
-  corners: {
-    topLeft: '┌',
-    topRight: '┐',
-    lowerRight: '┘',
-    lowerLeft: '└'
-  },
-  crosses: {
-    mid: '┼',
-    down: '┬',
-    up: '┴',
-    right: '├',
-    left: '┤'
-  },
-  header: Header,
-  cell: Cell,
-  skeleton: Skeleton
-}
-
 // Helpers -------------------------------------------------------------------
 
 const get = key => obj => obj[key]
@@ -73,13 +45,13 @@ const fillWith = el => length => str => `${str}${el.repeat(length - str.length)}
 const getCells = columns => data => columns.map(({width, key}) => ({width, value: get(key)(data)}))
 const union = (...arrs) => [...new Set([].concat(...arrs))]
 
-const generateColumn = config => data => key => {
+const generateColumn = padding => data => key => {
   const allColumns = data.map(get(key))
   const columnsWithValues = allColumns.filter(not(isUndefined))
   const vals = columnsWithValues.map(toString)
   const lengths = vals.map(length)
 
-  const width = Math.max(...lengths, key.length) + (config.padding * 2)
+  const width = Math.max(...lengths, key.length) + (padding * 2)
 
   return {width, key}
 }
@@ -105,20 +77,17 @@ const line = (Cell, Skeleton, {line, left, right, cross, padding}) => cells => {
 
 // Table ---------------------------------------------------------------------
 
-const Table = ({data, config}) => {
-  const validConfig = merge.recursive(defaultConfig, config)
+// Config --------------------------------------------------------------------
 
-  const {header, cell, skeleton} = validConfig
-  const {lines, corners, crosses, padding} = validConfig
-
-  const topLine = line(skeleton, skeleton, {line: lines.horizontal, left: corners.topLeft, right: corners.topRight, cross: crosses.down, padding})
-  const bottomLine = line(skeleton, skeleton, {line: lines.horizontal, left: corners.lowerLeft, right: corners.lowerRight, cross: crosses.up, padding})
-  const midLine = line(skeleton, skeleton, {line: lines.horizontal, left: crosses.right, right: crosses.left, cross: crosses.mid, padding})
-  const headers = line(header, skeleton, {line: lines.empty, left: lines.vertical, right: lines.vertical, cross: lines.vertical, padding})
-  const row = line(cell, skeleton, {line: lines.empty, left: lines.vertical, right: lines.vertical, cross: lines.vertical, padding})
+const Table = ({data, padding, header, cell, skeleton}) => {
+  const topLine = line(skeleton, skeleton, {line: '─', left: '┌', right: '┐', cross: '┬', padding})
+  const bottomLine = line(skeleton, skeleton, {line: '─', left: '└', right: '┘', cross: '┴', padding})
+  const midLine = line(skeleton, skeleton, {line: '─', left: '├', right: '┤', cross: '┼', padding})
+  const headers = line(header, skeleton, {line: ' ', left: '│', right: '│', cross: '│', padding})
+  const row = line(cell, skeleton, {line: ' ', left: '│', right: '│', cross: '│', padding})
 
   const keys = union(...data.map(Object.keys))
-  const columns = keys.map(generateColumn(validConfig)(data))
+  const columns = keys.map(generateColumn(padding)(data))
   const headings = generateHeadings(keys)
   const _skeleton = generateSkeleton(keys)
 
@@ -140,35 +109,18 @@ const Table = ({data, config}) => {
 
 Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
-  config: PropTypes.shape({
-    padding: PropTypes.number,
-    lines: PropTypes.shape({
-      empty: PropTypes.string,
-      vertical: PropTypes.string,
-      horizontal: PropTypes.string
-    }),
-    corners: PropTypes.shape({
-      topLeft: PropTypes.string,
-      topRight: PropTypes.string,
-      lowerRight: PropTypes.string,
-      lowerLeft: PropTypes.string
-    }),
-    crosses: PropTypes.shape({
-      mid: PropTypes.string,
-      down: PropTypes.string,
-      up: PropTypes.string,
-      right: PropTypes.string,
-      left: PropTypes.string
-    }),
-    header: PropTypes.function,
-    cell: PropTypes.function,
-    skeleton: PropTypes.function
-  })
+  padding: PropTypes.number,
+  header: PropTypes.func,
+  cell: PropTypes.func,
+  skeleton: PropTypes.func
 }
 
 Table.defaultProps = {
   data: [],
-  config: defaultConfig
+  padding: 1,
+  header: Header,
+  cell: Cell,
+  skeleton: Skeleton
 }
 
 // Exports -------------------------------------------------------------------

@@ -11,21 +11,15 @@ $ npm install ink-table
 
 ```jsx
 const data = [
-  {name: 'Sosa Saunders', gender: 'male', age: 17, email: 'random@random.com'},
-  {name: 'Angelina Kirk', gender: 'female', age: 3, email: 'random@random.com'},
-  {name: 'Bradford Rosales', gender: 'male', age: 20, email: 'random@random.com'},
-  {name: 'Gwen Schroeder', gender: 'female', age: 17, email: 'random@random.com'}
+  {name: 'Sosa Saunders', gender: 'male', age: 17, email: 'sosa.saunders@mail.com', phone: '+1 (809) 435-2786'},
+  {name: 'Angelina Kirk', gender: 'female', age: 3, email: 'angelina@kirk.io', phone: '+1 (870) 567-3516'},
+  {name: 'Bradford Rosales', gender: 'male', age: 20, email: 'bradfordrosales@fast.com', phone: '+1 (918) 573-3240'},
+  {name: 'Gwen Schroeder', gender: 'female', age: 17, email: 'gwen@corp.xyz', phone: '+1 (987) 417-2062'},
+  {name: 'Ellison Mann', gender: 'male', age: 5, email: 'ellisonmann@katakana.com', phone: '+1 (889) 411-2186'}
 ]
 
-const config = {
-  padding: 3,
-  crosses: {
-    mid: '$'
-  }
-}
-
 const Basic = () => (
-  <Table data={data} config={config}/>
+  <Table data={data}/>
 )
 
 render(<Basic/>)
@@ -37,47 +31,23 @@ render(<Basic/>)
 ## Props
 
 #### data `array<object>`
-> List of all the values.
+> List of all the values (rows).
 
-#### config `<config>`
-> Configuration object.
+#### padding `number`
+> Offset inside each cell. This is considered one side value (set to 2 will have 2 spaces on the left and on the right - 4 combined).
 
-## Configuration
-> The whole package is completely configurable!
+#### header `({children}) => h`
+> A component used as header cell. Value is passed as `children` prop.
+_(Recommend using `<Text/>` with `chalk` props.)_
 
-```js
-const defaultConfig = {
-  padding: 1,
-  lines: {
-    empty: ' ',
-    vertical: '│',
-    horizontal: '─'
-  },
-  corners: {
-    topLeft: '┌',
-    topRight: '┐',
-    lowerRight: '┘',
-    lowerLeft: '└'
-  },
-  crosses: {
-    mid: '┼',
-    down: '┬',
-    up: '┴',
-    right: '├',
-    left: '┤'
-  },
-  header: Header,
-  cell: Cell,
-  skeleton: Skeleton
-}
+#### cell `({children}) => h`
+> A component used as regular cell. Value is passed as `children` prop.
+_(Recommend using `<Text/>` with `chalk` props.)_
 
-const exampleConfigure = {
-  padding: 3,
-  crosses: {
-    mid: '$'
-  }
-}
-```
+#### skeleton `({children}) => h`
+> A component used as skeleton (lines and crosses ...). Value is passed as `children` prop.   
+_(Recommend using `<Text/>` with `chalk` props.)_
+
 
 ## License
 

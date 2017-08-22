@@ -1,6 +1,6 @@
 {
   "name": "ink-table",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A table component for Ink.",
   "main": "dist/index.js",
   "repository": "maticzav/ink-table",
@@ -28,7 +28,6 @@
     "component"
   ],
   "dependencies": {
-    "merge": "^1.2.0",
     "prop-types": "^15.5.10"
   },
   "devDependencies": {

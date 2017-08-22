@@ -1,5 +1,24 @@
-import {h, render} from 'ink'
+import {h, render, Text} from 'ink'
+import PropTypes from 'prop-types'
+
 import Table from '..'
+
+// Components ----------------------------------------------------------------
+
+const CustomHeader = ({children}) => <Text red italic>{children}</Text>
+CustomHeader.propTypes = {
+  children: PropTypes.any.isRequired
+}
+
+const CustomCell = ({children}) => <Text white bold>{children}</Text>
+CustomCell.propTypes = {
+  children: PropTypes.any.isRequired
+}
+
+const CustomSkeleton = ({children}) => <Text green>{children}</Text>
+CustomSkeleton.propTypes = {
+  children: PropTypes.any.isRequired
+}
 
 // Demo ----------------------------------------------------------------------
 
@@ -19,7 +38,7 @@ const data = [
 ]
 
 const Basic = () => (
-  <Table data={data}/>
+  <Table data={data} padding={3} header={CustomHeader} skeleton={CustomSkeleton} cell={CustomCell}/>
 )
 
 render(<Basic/>)

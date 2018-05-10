@@ -41,7 +41,7 @@
     "eslint-config-xo-react": "^0.13.0",
     "eslint-plugin-react": "^7.2.1",
     "eslint-plugin-xo": "^1.0.0",
-    "ink": "^0.3.1",
+    "ink": "^0.5.0",
     "xo": "^0.18.2"
   },
   "xo": {

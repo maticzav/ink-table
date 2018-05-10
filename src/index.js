@@ -1,10 +1,12 @@
-import {h, Text} from 'ink'
+import {h, Color, Bold} from 'ink'
 import PropTypes from 'prop-types'
 
 // Components ----------------------------------------------------------------
 
 const Header = ({children}) => (
-  <Text bold blue>{children}</Text>
+  <Bold>
+    <Color blue>{children}</Color>
+  </Bold>
 )
 
 Header.propTypes = {
@@ -12,7 +14,7 @@ Header.propTypes = {
 }
 
 const Cell = ({children}) => (
-  <Text>{children}</Text>
+  <Color>{children}</Color>
 )
 
 Cell.propTypes = {
@@ -24,7 +26,9 @@ Cell.defaultProps = {
 }
 
 const Skeleton = ({children}) => (
-  <Text bold white>{children}</Text>
+  <Bold>
+    <Color white>{children}</Color>
+  </Bold>
 )
 
 Skeleton.propTypes = {

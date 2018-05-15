@@ -1,6 +1,6 @@
 {
   "name": "ink-table",
-  "version": "0.0.0-semantic-release",
+  "version": "0.0.0-development",
   "description": "A table component for Ink.",
   "main": "dist/index.js",
   "repository": "maticzav/ink-table",
@@ -11,12 +11,15 @@
     "test": "xo && ava",
     "build": "babel src --out-dir=dist",
     "prepublish": "npm run build",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "engines": {
     "node": ">=6"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "cli",
     "ink-cli",
@@ -42,7 +45,8 @@
     "eslint-plugin-xo": "^1.0.0",
     "ink": "^0.3.1",
     "xo": "^0.18.2",
-    "semantic-release": "^15.4.1"
+    "semantic-release": "^15.4.1",
+    "travis-deploy-once": "^5.0.0"
   },
   "xo": {
     "extends": "xo-react",

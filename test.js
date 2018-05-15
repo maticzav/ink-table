@@ -1,4 +1,4 @@
-import {h, renderToString, Text} from 'ink'
+import {h, renderToString, Color} from 'ink'
 import PropTypes from 'prop-types'
 import test from 'ava'
 
@@ -10,7 +10,7 @@ const s = v => <Skeleton>{v}</Skeleton>
 const e = v => <Header>{v}</Header>
 const c = v => <Cell>{v}</Cell>
 
-const Custom = ({children}) => <Text red italic>{children}</Text>
+const Custom = ({children}) => <Color red italic>{children}</Color>
 Custom.propTypes = {
   children: PropTypes.any.isRequired
 }

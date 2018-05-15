@@ -38,15 +38,15 @@ render(<Basic/>)
 
 #### header `({children}) => h`
 > A component used as header cell. Value is passed as `children` prop.
-_(Recommend using `<Text/>` with `chalk` props.)_
+_(Recommend using `<Color/>` with `chalk` props.)_
 
 #### cell `({children}) => h`
 > A component used as regular cell. Value is passed as `children` prop.
-_(Recommend using `<Text/>` with `chalk` props.)_
+_(Recommend using `<Color/>` with `chalk` props.)_
 
 #### skeleton `({children}) => h`
 > A component used as skeleton (lines and crosses ...). Value is passed as `children` prop.   
-_(Recommend using `<Text/>` with `chalk` props.)_
+_(Recommend using `<Color/>` with `chalk` props.)_
 
 
 ## License

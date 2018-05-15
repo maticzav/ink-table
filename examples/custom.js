@@ -1,21 +1,21 @@
-import {h, render, Text} from 'ink'
+import {h, render, Color} from 'ink'
 import PropTypes from 'prop-types'
 
 import Table from '..'
 
 // Components ----------------------------------------------------------------
 
-const CustomHeader = ({children}) => <Text red italic>{children}</Text>
+const CustomHeader = ({children}) => <Color red italic>{children}</Color>
 CustomHeader.propTypes = {
   children: PropTypes.any.isRequired
 }
 
-const CustomCell = ({children}) => <Text white bold>{children}</Text>
+const CustomCell = ({children}) => <Color white bold>{children}</Color>
 CustomCell.propTypes = {
   children: PropTypes.any.isRequired
 }
 
-const CustomSkeleton = ({children}) => <Text green>{children}</Text>
+const CustomSkeleton = ({children}) => <Color green>{children}</Color>
 CustomSkeleton.propTypes = {
   children: PropTypes.any.isRequired
 }

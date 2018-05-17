@@ -44,7 +44,7 @@ const not = func => (...args) => !func(...args)
 const toString = val => (val || String()).toString()
 const isEmpty = el => el.length === 0
 
-const intersperse = val => vals => vals.reduce((s, c) => isEmpty(s) ? [c] : [...s, val, c], [])
+const intersperse = val => vals => vals.reduce((s, c) => isEmpty(s) ? [c] : [...s, val(), c], [])
 const fillWith = el => length => str => `${str}${el.repeat(length - str.length)}`
 const getCells = columns => data => columns.map(({width, key}) => ({width, value: get(key)(data)}))
 const union = (...arrs) => [...new Set([].concat(...arrs))]
@@ -73,7 +73,7 @@ const line = (Cell, Skeleton, {line, left, right, cross, padding}) => cells => {
   return (
     <div>
       <Skeleton>{left}</Skeleton>
-      {intersperse(<Skeleton>{cross}</Skeleton>)(columns)}
+      {intersperse(() => <Skeleton>{cross}</Skeleton>)(columns)}
       <Skeleton>{right}</Skeleton>
     </div>
   )
@@ -105,7 +105,7 @@ const Table = ({data, padding, header, cell, skeleton}) => {
       {topLine(emptyRow)}
       {headers(headersRow)}
       {midLine(emptyRow)}
-      {intersperse(midLine(emptyRow))(rows)}
+      {intersperse(() => midLine(emptyRow))(rows)}
       {bottomLine(emptyRow)}
     </span>
   )

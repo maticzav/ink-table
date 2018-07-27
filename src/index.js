@@ -1,4 +1,4 @@
-import {h, Color, Bold} from 'ink'
+import {Color, Bold} from 'ink'
 import PropTypes from 'prop-types'
 
 // Components ----------------------------------------------------------------

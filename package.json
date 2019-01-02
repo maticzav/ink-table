@@ -37,7 +37,7 @@
     "babel-cli": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-plugin-add-module-exports": "0.3.3",
-    "babel-plugin-transform-object-rest-spread": "6.23.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-plugin-transform-react-jsx": "6.24.1",
     "babel-preset-es2015-node5": "1.2.0",
     "eslint-config-xo-react": "0.17.0",

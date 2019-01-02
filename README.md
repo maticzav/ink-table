@@ -8,12 +8,14 @@
 ## Install
 
 ```bash
- npm install ink-table
+npm install ink-table
 ```
 
 ## Usage
 
 ```jsx
+import Table from 'ink-table'
+
 const data = [
   {
     name: "Sosa Saunders",
@@ -52,7 +54,9 @@ const data = [
   }
 ];
 
-const Basic = () => <Table data={data} />;
+const Basic = () => (
+  <Table data={data} />
+);
 
 render(<Basic />);
 ```

@@ -2851,9 +2851,9 @@ eslint-plugin-promise@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.0.1.tgz#2d074b653f35a23d1ba89d8e976a985117d1c6a2"
 
-eslint-plugin-react@7.12.1:
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.12.1.tgz#b9c4639f72469ff317ac31e3bd630d22d0dbf8f4"
+eslint-plugin-react@7.12.2:
+  version "7.12.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.12.2.tgz#95a4d8117011787824625ea57be9e38401d33548"
   dependencies:
     array-includes "^3.0.3"
     doctrine "^2.1.0"

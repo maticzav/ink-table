@@ -41,7 +41,7 @@
     "babel-plugin-transform-react-jsx": "6.24.1",
     "babel-preset-es2015-node5": "1.2.0",
     "eslint-config-xo-react": "0.17.0",
-    "eslint-plugin-react": "7.12.2",
+    "eslint-plugin-react": "7.12.3",
     "eslint-plugin-xo": "1.0.0",
     "ink": "0.5.1",
     "xo": "0.23.0",

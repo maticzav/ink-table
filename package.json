@@ -44,7 +44,7 @@
     "eslint-plugin-react": "7.12.3",
     "eslint-plugin-xo": "1.0.0",
     "ink": "0.5.1",
-    "xo": "0.23.0",
+    "xo": "0.24.0",
     "semantic-release": "15.13.3",
     "travis-deploy-once": "5.0.11"
   },

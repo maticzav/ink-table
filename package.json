@@ -33,7 +33,7 @@
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
-    "ava": "0.25.0",
+    "ava": "1.4.1",
     "babel-cli": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-plugin-add-module-exports": "0.3.3",

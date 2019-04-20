@@ -1,12 +1,13 @@
-import {h, Color, Bold} from 'ink'
+import React from 'react'
+import {Box, Text, Color} from 'ink'
 import PropTypes from 'prop-types'
 
 // Components ----------------------------------------------------------------
 
 const Header = ({children}) => (
-  <Bold>
+  <Text bold>
     <Color blue>{children}</Color>
-  </Bold>
+  </Text>
 )
 
 Header.propTypes = {
@@ -26,9 +27,9 @@ Cell.defaultProps = {
 }
 
 const Skeleton = ({children}) => (
-  <Bold>
-    <Color white>{children}</Color>
-  </Bold>
+  <Text bold>
+    <Color red>{children}</Color>
+  </Text>
 )
 
 Skeleton.propTypes = {
@@ -71,11 +72,11 @@ const line = (Cell, Skeleton, {line, left, right, cross, padding}) => cells => {
     (<Cell key={value}>{line.repeat(padding)}{fillWithLine(width - padding)(toString(value))}</Cell>))
 
   return (
-    <div>
+    <Box flexDirection="row">
       <Skeleton>{left}</Skeleton>
       {intersperse(() => <Skeleton>{cross}</Skeleton>)(columns)}
       <Skeleton>{right}</Skeleton>
-    </div>
+    </Box>
   )
 }
 
@@ -102,11 +103,11 @@ const Table = ({data, padding, header, cell, skeleton}) => {
 
   return (
     <span>
-      {topLine(emptyRow)}
-      {headers(headersRow)}
-      {midLine(emptyRow)}
+      <Box flexDirection="row">{topLine(emptyRow)}</Box>
+      <Box flexDirection="row">{headers(headersRow)}</Box>
+      <Box flexDirection="row">{midLine(emptyRow)}</Box>
       {intersperse(() => midLine(emptyRow))(rows)}
-      {bottomLine(emptyRow)}
+      <Box flexDirection="row">{bottomLine(emptyRow)}</Box>
     </span>
   )
 }

@@ -1,12 +1,11 @@
-import {h, Color, Bold} from 'ink'
+import React from 'react'
+import {Box, Color} from 'ink'
 import PropTypes from 'prop-types'
 
 // Components ----------------------------------------------------------------
 
 const Header = ({children}) => (
-  <Bold>
-    <Color blue>{children}</Color>
-  </Bold>
+  <Color blue bold>{children}</Color>
 )
 
 Header.propTypes = {
@@ -18,7 +17,8 @@ const Cell = ({children}) => (
 )
 
 Cell.propTypes = {
-  children: PropTypes.any.isRequired
+  children: PropTypes.any.isRequired,
+  focused: PropTypes.bool
 }
 
 Cell.defaultProps = {
@@ -26,9 +26,7 @@ Cell.defaultProps = {
 }
 
 const Skeleton = ({children}) => (
-  <Bold>
-    <Color white>{children}</Color>
-  </Bold>
+  <Color white bold>{children}</Color>
 )
 
 Skeleton.propTypes = {
@@ -43,10 +41,9 @@ const isUndefined = v => v === undefined
 const not = func => (...args) => !func(...args)
 const toString = val => (val || String()).toString()
 const isEmpty = el => el.length === 0
-
-const intersperse = val => vals => vals.reduce((s, c) => isEmpty(s) ? [c] : [...s, val(), c], [])
+const intersperse = val => vals => vals.reduce((s, c, i) => isEmpty(s) ? [c] : [...s, val(i), c], [])
 const fillWith = el => length => str => `${str}${el.repeat(length - str.length)}`
-const getCells = columns => data => columns.map(({width, key}) => ({width, value: get(key)(data)}))
+const getCells = columns => data => columns.map(({width, key}) => ({width, key, value: get(key)(data)}))
 const union = (...arrs) => [...new Set([].concat(...arrs))]
 
 const generateColumn = padding => data => key => {
@@ -54,28 +51,27 @@ const generateColumn = padding => data => key => {
   const columnsWithValues = allColumns.filter(not(isUndefined))
   const vals = columnsWithValues.map(toString)
   const lengths = vals.map(length)
-
   const width = Math.max(...lengths, key.length) + (padding * 2)
 
   return {width, key}
 }
 
-const copyToObject = func => arr => arr.reduce((o, k) => Object.assign({}, o, {[k]: func(k)}), {})
+const copyToObject = func => arr => arr.reduce((o, k) => ({...o, [k]: func(k)}), {})
 const generateHeadings = keys => copyToObject(key => key)(keys)
 const generateSkeleton = keys => copyToObject(() => '')(keys)
 
-const line = (Cell, Skeleton, {line, left, right, cross, padding}) => cells => {
+const line = (key, Cell, Skeleton, {line, left, right, cross, padding}) => (cells, index = '') => {
   const fillWithLine = fillWith(line)
 
-  const columns = cells.map(({width, value}) =>
-    (<Cell key={value}>{line.repeat(padding)}{fillWithLine(width - padding)(toString(value))}</Cell>))
+  const columns = cells.map(({width, key, value}, i) =>
+    (<Cell key={key + String(i)}>{line.repeat(padding)}{fillWithLine(width - padding)(toString(value))}</Cell>))
 
   return (
-    <div>
+    <Box key={key + String(index)}>
       <Skeleton>{left}</Skeleton>
-      {intersperse(() => <Skeleton>{cross}</Skeleton>)(columns)}
+      {intersperse(i => <Skeleton key={i}>{cross}</Skeleton>)(columns)}
       <Skeleton>{right}</Skeleton>
-    </div>
+    </Box>
   )
 }
 
@@ -84,11 +80,11 @@ const line = (Cell, Skeleton, {line, left, right, cross, padding}) => cells => {
 // Config --------------------------------------------------------------------
 
 const Table = ({data, padding, header, cell, skeleton}) => {
-  const topLine = line(skeleton, skeleton, {line: '─', left: '┌', right: '┐', cross: '┬', padding})
-  const bottomLine = line(skeleton, skeleton, {line: '─', left: '└', right: '┘', cross: '┴', padding})
-  const midLine = line(skeleton, skeleton, {line: '─', left: '├', right: '┤', cross: '┼', padding})
-  const headers = line(header, skeleton, {line: ' ', left: '│', right: '│', cross: '│', padding})
-  const row = line(cell, skeleton, {line: ' ', left: '│', right: '│', cross: '│', padding})
+  const topLine = line('top', skeleton, skeleton, {line: '─', left: '┌', right: '┐', cross: '┬', padding})
+  const bottomLine = line('bottom', skeleton, skeleton, {line: '─', left: '└', right: '┘', cross: '┴', padding})
+  const midLine = line('mid', skeleton, skeleton, {line: '─', left: '├', right: '┤', cross: '┼', padding})
+  const headers = line('header', header, skeleton, {line: ' ', left: '│', right: '│', cross: '│', padding})
+  const row = line('row', cell, skeleton, {line: ' ', left: '│', right: '│', cross: '│', padding})
 
   const keys = union(...data.map(Object.keys))
   const columns = keys.map(generateColumn(padding)(data))
@@ -98,7 +94,7 @@ const Table = ({data, padding, header, cell, skeleton}) => {
   const getRow = getCells(columns)
   const headersRow = getRow(headings)
   const emptyRow = getRow(_skeleton)
-  const rows = data.map(d => row(getRow(d)))
+  const rows = data.map((d, i) => row(getRow(d), i))
 
   return (
     <span>

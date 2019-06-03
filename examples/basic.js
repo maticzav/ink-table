@@ -1,4 +1,5 @@
-import {h, render} from 'ink'
+import React from 'react'
+import {render} from 'ink'
 import Table from '..'
 
 // Demo ----------------------------------------------------------------------

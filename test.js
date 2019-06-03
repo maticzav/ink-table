@@ -1,6 +1,8 @@
-import {h, renderToString, Color} from 'ink'
-import PropTypes from 'prop-types'
 import test from 'ava'
+import React from 'react'
+import {Box, Color} from 'ink'
+import {render} from 'ink-testing-library'
+import PropTypes from 'prop-types'
 
 import Table, {Header, Skeleton, Cell} from '.'
 
@@ -21,150 +23,149 @@ const u = v => <Custom>{v}</Custom>
 
 test('Renders table.', t => {
   const data = [{name: 'Foo'}]
-  const table = renderToString(<Table data={data}/>)
-
-  const expected = renderToString(
+  const {lastFrame: actual} = render(<Table data={data}/>)
+  const {lastFrame: expected} = render(
     <span>
-      <div>{s('┌')}{s('──────')}{s('┐')}</div>
-      <div>{s('│')}{e(' name ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┤')}</div>
-      <div>{s('│')}{c(' Foo  ')}{s('│')}</div>
-      <div>{s('└')}{s('──────')}{s('┘')}</div>
+      <Box>{s('┌')}{s('──────')}{s('┐')}</Box>
+      <Box>{s('│')}{e(' name ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┤')}</Box>
+      <Box>{s('│')}{c(' Foo  ')}{s('│')}</Box>
+      <Box>{s('└')}{s('──────')}{s('┘')}</Box>
     </span>
   )
 
-  t.is(table, expected)
+  t.is(actual(), expected())
 })
 
 test('Renders table with numbers.', t => {
   const data = [{name: 'Foo', age: 12}]
-  const table = renderToString(<Table data={data}/>)
+  const {lastFrame: actual} = render(<Table data={data}/>)
 
-  const expected = renderToString(
+  const {lastFrame: expected} = render(
     <span>
-      <div>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</div>
-      <div>{s('│')}{e(' name ')}{s('│')}{e(' age ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</div>
-      <div>{s('│')}{c(' Foo  ')}{s('│')}{c(' 12  ')}{s('│')}</div>
-      <div>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</div>
+      <Box>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</Box>
+      <Box>{s('│')}{e(' name ')}{s('│')}{e(' age ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
+      <Box>{s('│')}{c(' Foo  ')}{s('│')}{c(' 12  ')}{s('│')}</Box>
+      <Box>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</Box>
     </span>
   )
 
-  t.is(table, expected)
+  t.is(actual(), expected())
 })
 
 test('Renders table with multiple rows.', t => {
   const data = [{name: 'Foo', age: 12}, {name: 'Bar', age: 15}]
-  const table = renderToString(<Table data={data}/>)
+  const {lastFrame: actual} = render(<Table data={data}/>)
 
-  const expected = renderToString(
+  const {lastFrame: expected} = render(
     <span>
-      <div>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</div>
-      <div>{s('│')}{e(' name ')}{s('│')}{e(' age ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</div>
-      <div>{s('│')}{c(' Foo  ')}{s('│')}{c(' 12  ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</div>
-      <div>{s('│')}{c(' Bar  ')}{s('│')}{c(' 15  ')}{s('│')}</div>
-      <div>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</div>
+      <Box>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</Box>
+      <Box>{s('│')}{e(' name ')}{s('│')}{e(' age ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
+      <Box>{s('│')}{c(' Foo  ')}{s('│')}{c(' 12  ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
+      <Box>{s('│')}{c(' Bar  ')}{s('│')}{c(' 15  ')}{s('│')}</Box>
+      <Box>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</Box>
     </span>
   )
 
-  t.is(table, expected)
+  t.is(actual(), expected())
 })
 
 test('Renders table with undefined value.', t => {
   const data = [{name: 'Foo'}, {name: 'Bar', age: 15}]
-  const table = renderToString(<Table data={data}/>)
+  const {lastFrame: actual} = render(<Table data={data}/>)
 
-  const expected = renderToString(
+  const {lastFrame: expected} = render(
     <span>
-      <div>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</div>
-      <div>{s('│')}{e(' name ')}{s('│')}{e(' age ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</div>
-      <div>{s('│')}{c(' Foo  ')}{s('│')}{c('     ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</div>
-      <div>{s('│')}{c(' Bar  ')}{s('│')}{c(' 15  ')}{s('│')}</div>
-      <div>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</div>
+      <Box>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</Box>
+      <Box>{s('│')}{e(' name ')}{s('│')}{e(' age ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
+      <Box>{s('│')}{c(' Foo  ')}{s('│')}{c('     ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
+      <Box>{s('│')}{c(' Bar  ')}{s('│')}{c(' 15  ')}{s('│')}</Box>
+      <Box>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</Box>
     </span>
   )
 
-  t.is(table, expected)
+  t.is(actual(), expected())
 })
 
 test('Renders table with custom padding.', t => {
   const data = [{name: 'Foo', age: 12}, {name: 'Bar', age: 15}]
-  const table = renderToString(<Table data={data} padding={3}/>)
+  const {lastFrame: actual} = render(<Table data={data} padding={3}/>)
 
-  const expected = renderToString(
+  const {lastFrame: expected} = render(
     <span>
-      <div>{s('┌')}{s('──────────')}{s('┬')}{s('─────────')}{s('┐')}</div>
-      <div>{s('│')}{e('   name   ')}{s('│')}{e('   age   ')}{s('│')}</div>
-      <div>{s('├')}{s('──────────')}{s('┼')}{s('─────────')}{s('┤')}</div>
-      <div>{s('│')}{c('   Foo    ')}{s('│')}{c('   12    ')}{s('│')}</div>
-      <div>{s('├')}{s('──────────')}{s('┼')}{s('─────────')}{s('┤')}</div>
-      <div>{s('│')}{c('   Bar    ')}{s('│')}{c('   15    ')}{s('│')}</div>
-      <div>{s('└')}{s('──────────')}{s('┴')}{s('─────────')}{s('┘')}</div>
+      <Box>{s('┌')}{s('──────────')}{s('┬')}{s('─────────')}{s('┐')}</Box>
+      <Box>{s('│')}{e('   name   ')}{s('│')}{e('   age   ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────────')}{s('┼')}{s('─────────')}{s('┤')}</Box>
+      <Box>{s('│')}{c('   Foo    ')}{s('│')}{c('   12    ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────────')}{s('┼')}{s('─────────')}{s('┤')}</Box>
+      <Box>{s('│')}{c('   Bar    ')}{s('│')}{c('   15    ')}{s('│')}</Box>
+      <Box>{s('└')}{s('──────────')}{s('┴')}{s('─────────')}{s('┘')}</Box>
     </span>
   )
 
-  t.is(table, expected)
+  t.is(actual(), expected())
 })
 
 test('Renders table with custom header.', t => {
   const data = [{name: 'Foo', age: 12}, {name: 'Bar', age: 15}]
-  const table = renderToString(<Table data={data} header={Custom}/>)
+  const {lastFrame: actual} = render(<Table data={data} header={Custom}/>)
 
-  const expected = renderToString(
+  const {lastFrame: expected} = render(
     <span>
-      <div>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</div>
-      <div>{s('│')}{u(' name ')}{s('│')}{u(' age ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</div>
-      <div>{s('│')}{c(' Foo  ')}{s('│')}{c(' 12  ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</div>
-      <div>{s('│')}{c(' Bar  ')}{s('│')}{c(' 15  ')}{s('│')}</div>
-      <div>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</div>
+      <Box>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</Box>
+      <Box>{s('│')}{u(' name ')}{s('│')}{u(' age ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
+      <Box>{s('│')}{c(' Foo  ')}{s('│')}{c(' 12  ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
+      <Box>{s('│')}{c(' Bar  ')}{s('│')}{c(' 15  ')}{s('│')}</Box>
+      <Box>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</Box>
     </span>
   )
 
-  t.is(table, expected)
+  t.is(actual(), expected())
 })
 
 test('Renders table with custom cell.', t => {
   const data = [{name: 'Foo', age: 12}, {name: 'Bar', age: 15}]
-  const table = renderToString(<Table data={data} cell={Custom}/>)
+  const {lastFrame: actual} = render(<Table data={data} cell={Custom}/>)
 
-  const expected = renderToString(
+  const {lastFrame: expected} = render(
     <span>
-      <div>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</div>
-      <div>{s('│')}{e(' name ')}{s('│')}{e(' age ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</div>
-      <div>{s('│')}{u(' Foo  ')}{s('│')}{u(' 12  ')}{s('│')}</div>
-      <div>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</div>
-      <div>{s('│')}{u(' Bar  ')}{s('│')}{u(' 15  ')}{s('│')}</div>
-      <div>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</div>
+      <Box>{s('┌')}{s('──────')}{s('┬')}{s('─────')}{s('┐')}</Box>
+      <Box>{s('│')}{e(' name ')}{s('│')}{e(' age ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
+      <Box>{s('│')}{u(' Foo  ')}{s('│')}{u(' 12  ')}{s('│')}</Box>
+      <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
+      <Box>{s('│')}{u(' Bar  ')}{s('│')}{u(' 15  ')}{s('│')}</Box>
+      <Box>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</Box>
     </span>
   )
 
-  t.is(table, expected)
+  t.is(actual(), expected())
 })
 
 test('Renders table with custom skeleton.', t => {
   const data = [{name: 'Foo', age: 12}, {name: 'Bar', age: 15}]
-  const table = renderToString(<Table data={data} skeleton={Custom}/>)
+  const {lastFrame: actual} = render(<Table data={data} skeleton={Custom}/>)
 
-  const expected = renderToString(
+  const {lastFrame: expected} = render(
     <span>
-      <div>{u('┌')}{u('──────')}{u('┬')}{u('─────')}{u('┐')}</div>
-      <div>{u('│')}{e(' name ')}{u('│')}{e(' age ')}{u('│')}</div>
-      <div>{u('├')}{u('──────')}{u('┼')}{u('─────')}{u('┤')}</div>
-      <div>{u('│')}{c(' Foo  ')}{u('│')}{c(' 12  ')}{u('│')}</div>
-      <div>{u('├')}{u('──────')}{u('┼')}{u('─────')}{u('┤')}</div>
-      <div>{u('│')}{c(' Bar  ')}{u('│')}{c(' 15  ')}{u('│')}</div>
-      <div>{u('└')}{u('──────')}{u('┴')}{u('─────')}{u('┘')}</div>
+      <Box>{u('┌')}{u('──────')}{u('┬')}{u('─────')}{u('┐')}</Box>
+      <Box>{u('│')}{e(' name ')}{u('│')}{e(' age ')}{u('│')}</Box>
+      <Box>{u('├')}{u('──────')}{u('┼')}{u('─────')}{u('┤')}</Box>
+      <Box>{u('│')}{c(' Foo  ')}{u('│')}{c(' 12  ')}{u('│')}</Box>
+      <Box>{u('├')}{u('──────')}{u('┼')}{u('─────')}{u('┤')}</Box>
+      <Box>{u('│')}{c(' Bar  ')}{u('│')}{c(' 15  ')}{u('│')}</Box>
+      <Box>{u('└')}{u('──────')}{u('┴')}{u('─────')}{u('┘')}</Box>
     </span>
   )
 
-  t.is(table, expected)
+  t.is(actual(), expected())
 })
 
 // ---------------------------------------------------------------------------

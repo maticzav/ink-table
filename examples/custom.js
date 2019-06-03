@@ -1,4 +1,5 @@
-import {h, render, Color} from 'ink'
+import React from 'react'
+import {render, Color} from 'ink'
 import PropTypes from 'prop-types'
 
 import Table from '..'

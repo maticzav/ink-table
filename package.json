@@ -7,12 +7,16 @@
   "author": "Matic Zavadlal <matic.zavadlal@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "pretest": "npm run build",
-    "test": "xo && ava",
-    "build": "babel src --out-dir=dist",
-    "prepublish": "npm run build",
-    "semantic-release": "semantic-release",
-    "travis-deploy-once": "travis-deploy-once"
+    "compile": "tsc -d",
+    "coverage": "codecov",
+    "clean": "rimraf dist",
+    "lint": "prettier-check --ignore-path .gitignore src/**/*.ts",
+    "posttest": "npm-run-all lint",
+    "prepublishOnly": "npm-run-all compile",
+    "prerelease": "npm-run-all test",
+    "pretest": "npm-run-all clean compile",
+    "release": "semantic-release",
+    "test": "NODE_ENV=test jest"
   },
   "engines": {
     "node": ">=8"
@@ -33,45 +37,27 @@
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "7.4.4",
-    "@babel/core": "7.4.5",
-    "@babel/preset-react": "7.0.0",
-    "ava": "1.4.1",
-    "eslint-config-xo-react": "0.19.0",
-    "eslint-plugin-react": "7.13.0",
-    "eslint-plugin-react-hooks": "1.6.0",
+    "@types/ink": "^0.5.1",
+    "@types/ink-testing-library": "^1.0.0",
+    "@types/jest": "^24.0.13",
+    "@types/prop-types": "^15.7.1",
+    "@types/react": "^16.8.19",
+    "codecov": "^3.5.0",
+    "husky": "^2.3.0",
     "ink": "2.2.0",
     "ink-testing-library": "1.0.1",
+    "jest": "^24.8.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.17.1",
+    "pretty-quick": "^1.11.0",
     "react": "16.8.6",
+    "rimraf": "^2.6.3",
     "semantic-release": "15.13.12",
-    "travis-deploy-once": "5.0.11",
-    "xo": "0.24.0"
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1"
   },
   "peerDependencies": {
     "ink": ">=2.0.0",
     "react": ">=16.8.0"
-  },
-  "babel": {
-    "presets": [
-      "@ava/stage-4",
-      "@babel/preset-react"
-    ]
-  },
-  "xo": {
-    "extends": "xo-react",
-    "space": true,
-    "semicolon": false,
-    "rules": {
-      "new-cap": 0,
-      "complexity": 0,
-      "default-case": 0,
-      "react/no-unused-prop-types": 0
-    }
-  },
-  "ava": {
-    "color": true
-  },
-  "release": {
-    "branch": "master"
   }
 }

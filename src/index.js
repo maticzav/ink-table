@@ -26,7 +26,7 @@ Cell.defaultProps = {
 }
 
 const Skeleton = ({children}) => (
-  <Color white bold>{children}</Color>
+  <Color bold>{children}</Color>
 )
 
 Skeleton.propTypes = {

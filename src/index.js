@@ -39,7 +39,7 @@ const get = key => obj => obj[key]
 const length = el => el.length
 const isUndefined = v => v === undefined
 const not = func => (...args) => !func(...args)
-const toString = val => (val || String()).toString()
+const toString = val => (isUndefined(val) ? String() : `${val}`)
 const isEmpty = el => el.length === 0
 const intersperse = val => vals => vals.reduce((s, c, i) => isEmpty(s) ? [c] : [...s, val(i), c], [])
 const fillWith = el => length => str => `${str}${el.repeat(length - str.length)}`

@@ -55,7 +55,7 @@ test('Renders table with numbers.', t => {
 })
 
 test('Renders table with multiple rows.', t => {
-  const data = [{name: 'Foo', age: 12}, {name: 'Bar', age: 15}]
+  const data = [{name: 'Foo', age: 12}, {name: 'Bar', age: 0}]
   const {lastFrame: actual} = render(<Table data={data}/>)
 
   const {lastFrame: expected} = render(
@@ -65,7 +65,7 @@ test('Renders table with multiple rows.', t => {
       <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
       <Box>{s('│')}{c(' Foo  ')}{s('│')}{c(' 12  ')}{s('│')}</Box>
       <Box>{s('├')}{s('──────')}{s('┼')}{s('─────')}{s('┤')}</Box>
-      <Box>{s('│')}{c(' Bar  ')}{s('│')}{c(' 15  ')}{s('│')}</Box>
+      <Box>{s('│')}{c(' Bar  ')}{s('│')}{c(' 0   ')}{s('│')}</Box>
       <Box>{s('└')}{s('──────')}{s('┴')}{s('─────')}{s('┘')}</Box>
     </span>
   )

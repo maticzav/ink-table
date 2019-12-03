@@ -26,7 +26,7 @@ Cell.defaultProps = {
 }
 
 const Skeleton = ({children}) => (
-  <Color white bold>{children}</Color>
+  <Color bold>{children}</Color>
 )
 
 Skeleton.propTypes = {
@@ -101,7 +101,7 @@ const Table = ({data, padding, header, cell, skeleton}) => {
       {topLine(emptyRow)}
       {headers(headersRow)}
       {midLine(emptyRow)}
-      {intersperse((i) => midLine(emptyRow, i))(rows)}
+      {intersperse(i => midLine(emptyRow, i))(rows)}
       {bottomLine(emptyRow)}
     </span>
   )

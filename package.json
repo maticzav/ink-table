@@ -45,7 +45,7 @@
     "react": "16.8.6",
     "semantic-release": "15.13.16",
     "travis-deploy-once": "5.0.11",
-    "xo": "0.24.0"
+    "xo": "0.32.1"
   },
   "peerDependencies": {
     "ink": ">=2.0.0",

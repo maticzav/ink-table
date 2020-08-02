@@ -1,22 +1,22 @@
 import React from 'react'
-import {render, Color} from 'ink'
+import {render, Text} from 'ink'
 import PropTypes from 'prop-types'
 
 import Table from '..'
 
 // Components ----------------------------------------------------------------
 
-const CustomHeader = ({children}) => <Color red italic>{children}</Color>
+const CustomHeader = ({children}) => <Text italic color="red">{children}</Text>
 CustomHeader.propTypes = {
   children: PropTypes.any.isRequired
 }
 
-const CustomCell = ({children}) => <Color white bold>{children}</Color>
+const CustomCell = ({children}) => <Text bold color="white">{children}</Text>
 CustomCell.propTypes = {
   children: PropTypes.any.isRequired
 }
 
-const CustomSkeleton = ({children}) => <Color green>{children}</Color>
+const CustomSkeleton = ({children}) => <Text color="green">{children}</Text>
 CustomSkeleton.propTypes = {
   children: PropTypes.any.isRequired
 }
@@ -28,7 +28,7 @@ const data = [
   {name: 'Angelina Kirk', gender: 'female', company: 'ZENTILITY', email: 'angelinakirk@zentility.com', phone: '+1 (870) 567-3516', address: 'Corbin Place, Stevens, Nevada, 6268'},
   {name: 'Bradford Rosales', gender: 'male', company: 'HYDROCOM', email: 'bradfordrosales@hydrocom.com', phone: '+1 (918) 573-3240', address: 'Troy Avenue, Martinez, Oklahoma, 1402'},
   {name: 'Gwen Schroeder', gender: 'female', company: 'KIDGREASE', email: 'gwenschroeder@kidgrease.com', phone: '+1 (987) 417-2062', address: 'Bainbridge Street, Nogal, Vermont, 1540'},
-  {name: 'Ellison Mann', gender: 'male', company: 'KATAKANA', email: 'ellisonmann@katakana.com', phone: '+1 (889) 411-2186', address: 'Raleigh Place, Greenock, Colorado, 4444'},
+  {name: 'Ellison Mann', gender: 'male', company: 'KATAKANA', email: 'ellisonmann@katakana.com', phone: '+1 (889) 411-2186', address: 'Raleigh Place, Greenock, Textado, 4444'},
   {name: 'Lou Gamble', gender: 'female', company: 'EXOSPACE', email: 'lougamble@exospace.com', phone: '+1 (985) 573-3129', address: 'Schenck Avenue, Elbert, Nebraska, 830'},
   {name: 'Leticia Merrill', gender: 'female', company: 'EYEWAX', email: 'leticiamerrill@eyewax.com', phone: '+1 (920) 515-3647', address: 'Bradford Street, Delwood, Washington, 2828'},
   {name: 'Johns Workman', gender: 'male', company: 'ZILLADYNE', email: 'johnsworkman@zilladyne.com', phone: '+1 (873) 503-2314', address: 'Sackman Street, Adelino, Texas, 8004'},

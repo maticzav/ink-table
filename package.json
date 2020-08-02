@@ -33,7 +33,7 @@
     "prop-types": "15.7.2"
   },
   "devDependencies": {
-    "@ava/babel": "^1.0.1",
+    "@ava/babel": "1.0.1",
     "@ava/babel-preset-stage-4": "4.0.0",
     "@babel/cli": "7.4.4",
     "@babel/core": "7.4.5",

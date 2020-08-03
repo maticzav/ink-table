@@ -45,7 +45,7 @@
     "ink": "3.0.1",
     "ink-testing-library": "2.0.1",
     "react": "16.13.1",
-    "semantic-release": "15.13.16",
+    "semantic-release": "15.14.0",
     "travis-deploy-once": "5.0.11",
     "xo": "0.32.1"
   },

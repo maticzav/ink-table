@@ -1,22 +1,22 @@
 import React from 'react'
-import {render, Color} from 'ink'
+import {render, Text} from 'ink'
 import PropTypes from 'prop-types'
 
 import Table from '..'
 
 // Components ----------------------------------------------------------------
 
-const CustomHeader = ({children}) => <Color red italic>{children}</Color>
+const CustomHeader = ({children}) => <Text italic color="red">{children}</Text>
 CustomHeader.propTypes = {
   children: PropTypes.any.isRequired
 }
 
-const CustomCell = ({children}) => <Color white bold>{children}</Color>
+const CustomCell = ({children}) => <Text bold color="white">{children}</Text>
 CustomCell.propTypes = {
   children: PropTypes.any.isRequired
 }
 
-const CustomSkeleton = ({children}) => <Color green>{children}</Color>
+const CustomSkeleton = ({children}) => <Text color="green">{children}</Text>
 CustomSkeleton.propTypes = {
   children: PropTypes.any.isRequired
 }

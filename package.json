@@ -43,7 +43,7 @@
     "eslint-plugin-react": "7.13.0",
     "eslint-plugin-react-hooks": "1.6.0",
     "ink": "3.0.1",
-    "ink-testing-library": "2.0.1",
+    "ink-testing-library": "2.1.0",
     "react": "16.13.1",
     "semantic-release": "15.13.16",
     "travis-deploy-once": "5.0.11",

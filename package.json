@@ -40,7 +40,7 @@
     "ink": "3.0.8",
     "ink-testing-library": "2.1.0",
     "react": "16.13.1",
-    "xo": "0.32.1"
+    "xo": "0.34.2"
   },
   "peerDependencies": {
     "ink": ">=3.0.0",

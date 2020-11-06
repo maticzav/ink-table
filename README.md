@@ -18,75 +18,83 @@ import Table from 'ink-table'
 
 const data = [
   {
-    name: "Sosa Saunders",
-    gender: "male",
+    name: 'Sosa Saunders',
+    gender: 'male',
     age: 17,
-    email: "sosa.saunders@mail.com",
-    phone: "+1 (809) 435-2786"
+    email: 'sosa.saunders@mail.com',
+    phone: '+1 (809) 435-2786',
   },
   {
-    name: "Angelina Kirk",
-    gender: "female",
+    name: 'Angelina Kirk',
+    gender: 'female',
     age: 3,
-    email: "angelina@kirk.io",
-    phone: "+1 (870) 567-3516"
+    email: 'angelina@kirk.io',
+    phone: '+1 (870) 567-3516',
   },
   {
-    name: "Bradford Rosales",
-    gender: "male",
+    name: 'Bradford Rosales',
+    gender: 'male',
     age: 20,
-    email: "bradfordrosales@fast.com",
-    phone: "+1 (918) 573-3240"
+    email: 'bradfordrosales@fast.com',
+    phone: '+1 (918) 573-3240',
   },
   {
-    name: "Gwen Schroeder",
-    gender: "female",
+    name: 'Gwen Schroeder',
+    gender: 'female',
     age: 17,
-    email: "gwen@corp.xyz",
-    phone: "+1 (987) 417-2062"
+    email: 'gwen@corp.xyz',
+    phone: '+1 (987) 417-2062',
   },
   {
-    name: "Ellison Mann",
-    gender: "male",
+    name: 'Ellison Mann',
+    gender: 'male',
     age: 5,
-    email: "ellisonmann@katakana.com",
-    phone: "+1 (889) 411-2186"
-  }
-];
+    email: 'ellisonmann@katakana.com',
+    phone: '+1 (889) 411-2186',
+  },
+]
 
-const Basic = () => (
-  <Table data={data} />
-);
+const Basic = () => <Table data={data} />
 
-render(<Basic />);
+render(<Basic />)
 ```
 
 <img src="media/demo.png" width="720">
 
-## Props
+## Documentation
 
-### data `array<object>`
+```ts
+type ScalarDict = {
+  [key: string]: string | number | boolean | null | undefined
+}
 
-> List of all the values (rows).
-
-### padding `number`
-
-> Offset inside each cell. This is considered one side value (set to 2 will have 2 spaces on the left and on the right - 4 combined).
-
-### header `({children}) => h`
-
-> A component used as header cell. Value is passed as `children` prop.
-> _(Recommend using `<Text/>` with `chalk` props.)_
-
-### cell `({children}) => h`
-
-> A component used as regular cell. Value is passed as `children` prop.
-> _(Recommend using `<Text/>` with `chalk` props.)_
-
-### skeleton `({children}) => h`
-
-> A component used as skeleton (lines and crosses ...). Value is passed as `children` prop.
-> _(Recommend using `<Text/>` with `chalk` props.)_
+export type TableProps<T extends ScalarDict> = {
+  /**
+   * List of values (rows).
+   */
+  data: T[]
+  /**
+   * Columns that we should display in the table.
+   */
+  columns: (keyof T)[]
+  /**
+   * Cell padding.
+   */
+  padding: number
+  /**
+   * Header component.
+   */
+  header: (props: React.PropsWithChildren<{}>) => JSX.Element
+  /**
+   * Component used to render a cell in the table.
+   */
+  cell: (props: React.PropsWithChildren<{}>) => JSX.Element
+  /**
+   * Component used to render the skeleton of the table.
+   */
+  skeleton: (props: React.PropsWithChildren<{}>) => JSX.Element
+}
+```
 
 ## License
 

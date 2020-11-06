@@ -16,7 +16,7 @@ jobs:
       - run: yarn install
       - run: yarn build
       - run: yarn test
-      - run: yarn coverage
+      # - run: yarn coverage
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

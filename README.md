@@ -1,6 +1,5 @@
 # ink-table
 
-[![Build Status](https://travis-ci.org/maticzav/ink-table.svg?branch=master)](https://travis-ci.org/maticzav/ink-table)
 [![npm version](https://badge.fury.io/js/ink-table.svg)](https://badge.fury.io/js/ink-table)
 
 > A table component for [Ink](https://github.com/vadimdemedes/ink).

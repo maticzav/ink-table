@@ -1,0 +1,16 @@
+on: [pull_request]
+
+name: Test
+jobs:
+  build:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - run: yarn install
+      - run: yarn build
+      - run: yarn test
+      - run: yarn coverage

@@ -41,7 +41,7 @@ export type TableProps<T extends ScalarDict> = {
 
 /* Table */
 
-export default class Table<T extends ScalarDict> extends React.Component<
+export class Table<T extends ScalarDict> extends React.Component<
   Pick<TableProps<T>, 'data'> & Partial<TableProps<T>>
 > {
   /* Config */

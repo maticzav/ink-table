@@ -12,6 +12,14 @@ type ScalarDict = {
 
 export type CellProps = React.PropsWithChildren<{ column: number }>
 
+export type ColumnAlignment = 'left' | 'right' | 'center'
+
+export interface ColumnProps<T> {
+  key: T
+  align?: ColumnAlignment
+}
+export type ColumnPropsUnion<T> = { [K in keyof T]: ColumnProps<K> }[keyof T]
+
 export type TableProps<T extends ScalarDict> = {
   /**
    * List of values (rows).
@@ -20,7 +28,7 @@ export type TableProps<T extends ScalarDict> = {
   /**
    * Columns that we should display in the table.
    */
-  columns: (keyof T)[]
+  columns: (keyof T | ColumnPropsUnion<T>)[]
   /**
    * Cell padding.
    */
@@ -41,7 +49,7 @@ export type TableProps<T extends ScalarDict> = {
 
 /* Table */
 
-export default class Table<T extends ScalarDict> extends React.Component<
+export class Table<T extends ScalarDict> extends React.Component<
   Pick<TableProps<T>, 'data'> & Partial<TableProps<T>>
 > {
   /* Config */
@@ -85,7 +93,13 @@ export default class Table<T extends ScalarDict> extends React.Component<
   getColumns(): Column<T>[] {
     const { columns, padding } = this.getConfig()
 
-    const widths: Column<T>[] = columns.map((key) => {
+    const widths: Column<T>[] = columns.map((propsOrKey) => {
+      const props: ColumnProps<keyof T> =
+        typeof propsOrKey === 'object'
+          ? propsOrKey
+          : { key: propsOrKey, align: 'left' }
+      const key = props.key
+
       const header = String(key).length
       /* Get the width of each cell in the column */
       const data = this.props.data.map((data) => {
@@ -102,6 +116,7 @@ export default class Table<T extends ScalarDict> extends React.Component<
         column: key,
         width: width,
         key: String(key),
+        align: props.align ?? 'left',
       }
     })
 
@@ -112,11 +127,13 @@ export default class Table<T extends ScalarDict> extends React.Component<
    * Returns a (data) row representing the headings.
    */
   getHeadings(): Partial<T> {
-    const { columns } = this.getConfig()
+    const columns = this.getConfig().columns.map((c) =>
+      typeof c === 'object' ? c.key : c,
+    )
 
     const headings: Partial<T> = columns.reduce(
       (acc, column) => ({ ...acc, [column]: column }),
-      {},
+      {} as Partial<T>,
     )
 
     return headings
@@ -268,6 +285,7 @@ type Column<T> = {
   key: string
   column: keyof T
   width: number
+  align: ColumnAlignment
 }
 
 /**
@@ -313,8 +331,19 @@ function row<T extends ScalarDict>(
             const key = `${props.key}-cell-${column.key}`
 
             // margins
-            const ml = config.padding
-            const mr = column.width - String(value).length - config.padding
+            const spaces = column.width - String(value).length
+            let ml: number
+            let mr: number
+            if (column.align === 'left') {
+              ml = config.padding
+              mr = spaces - ml
+            } else if (column.align === 'center') {
+              ml = Math.floor(spaces / 2)
+              mr = Math.ceil(spaces / 2)
+            } else {
+              mr = config.padding
+              ml = spaces - mr
+            }
 
             return (
               /* prettier-ignore */

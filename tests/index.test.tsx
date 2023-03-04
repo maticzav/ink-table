@@ -8,7 +8,7 @@ import Table, { Header, Skeleton, Cell } from '../src'
 
 const skeleton = (v: string) => <Skeleton>{v}</Skeleton>
 const header = (v: string) => <Header>{v}</Header>
-const cell = (v: string) => <Cell>{v}</Cell>
+const cell = (v: string) => <Cell column={0}>{v}</Cell>
 
 const Custom = ({ children }: React.PropsWithChildren<{}>) => (
   <Text italic color="red">

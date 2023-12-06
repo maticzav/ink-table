@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Text } from 'ink'
 import { render } from 'ink-testing-library'
 
-import Table, { Header, Skeleton, Cell } from '../src'
+import { Table, Header, Skeleton, Cell } from '../src/index.js'
 
 // Helpers -------------------------------------------------------------------
 

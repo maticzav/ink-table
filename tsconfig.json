@@ -1,32 +1,18 @@
 {
+  "extends": "@tsconfig/node16",
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-
-    "target": "es2019",
-    "module": "commonjs",
-    "lib": ["dom", "es2017", "es2019"],
-    "declaration": true,
-    "declarationMap": true,
-    // "importHelpers": true,
-    // "isolatedModules": true,
-
-    "jsx": "react",
-
-    "strict": true,
-    "strictNullChecks": true,
-
-    /* Additional Checks */
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-
-    /* Module Resolution Options */
-    "moduleResolution": "node",
-    "esModuleInterop": true,
+    "module": "Node16",
+    "moduleResolution": "node16",
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "exclude": ["**/tests/**/*", "**/dist/**/*", "**/examples/**/*"]
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "dist/**/*",
+    "examples/**/*"
+  ],
 }

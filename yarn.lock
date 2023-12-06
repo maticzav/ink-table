@@ -1874,10 +1874,10 @@ inherits@2:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-ink-testing-library@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/ink-testing-library/-/ink-testing-library-2.1.0.tgz#b5ffd1ef1049550ae4d2f008b8770e7ece6e0313"
-  integrity sha512-7TNlOjJlJXB33vG7yVa+MMO7hCjaC1bCn+zdpSjknWoLbOWMaFdKc7LJvqVkZ0rZv2+akhjXPrcR/dbxissjUw==
+ink-testing-library@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ink-testing-library/-/ink-testing-library-3.0.0.tgz#7ff9ca443557dba273cea4f278063e540c88cc93"
+  integrity sha512-ItyyoOmcm6yftb7c5mZI2HU22BWzue8PBbO3DStmY8B9xaqfKr7QJONiWOXcwVsOk/6HuVQ0v7N5xhPaR3jycA==
 
 ink@3.2.0:
   version "3.2.0"

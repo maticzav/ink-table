@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { useMemo } from 'react'
 import { Box, Text } from 'ink'
 import { sha1 } from 'object-hash'
 import { ScalarDict } from './types'
@@ -46,6 +46,34 @@ const getDataKeys = <T extends ScalarDict>(dataList: T[]) => {
   return Array.from(keys);
 }
 
+/* Helper components */
+
+/**
+ * Renders the header of a table.
+ */
+export function Header(props: React.PropsWithChildren<{}>) {
+  return (
+    <Text bold color="blue">
+      {props.children}
+    </Text>
+  )
+}
+
+/**
+ * Renders a cell in the table.
+ */
+export function Cell(props: CellProps) {
+  return <Text>{props.children}</Text>
+}
+
+/**
+ * Redners the scaffold of the table.
+ */
+export function Skeleton(props: React.PropsWithChildren<{}>) {
+  return <Text bold>{props.children}</Text>
+}
+
+
 const Table = <T extends ScalarDict>({
   data,
   columns: columnNames = getDataKeys(data),
@@ -55,12 +83,12 @@ const Table = <T extends ScalarDict>({
   skeleton = Skeleton,
 }: TableProps<T>) => {
 
-  const headings: Partial<T> = columnNames.reduce(
+  const headings: Partial<T> = useMemo(() => columnNames.reduce(
     (acc, column) => ({ ...acc, [column]: column }),
     {},
-  )
+  ), columnNames);
 
-  const columnConfigs = columnNames.map((key) => {
+  const columnConfigs = useMemo(() => columnNames.map((key) => {
     const header = String(key).length
     /* Get the width of each cell in the column */
     const dataValues = data.map((data) => {
@@ -78,10 +106,10 @@ const Table = <T extends ScalarDict>({
       width: width,
       key: String(key),
     }
-  })
+  }), columnNames)
 
   // The top most line in the table.
-  const Top = createRowComponent<T>({
+  const Top = useMemo(() => createRowComponent<T>({
     cell: skeleton,
     padding: padding,
     skeleton: {
@@ -92,10 +120,10 @@ const Table = <T extends ScalarDict>({
       right: '┐',
       cross: '┬',
     },
-  })
+  }), [header, skeleton, padding])
 
   // The line with column names.
-  const Heading = createRowComponent<T>({
+  const Heading = useMemo(() => createRowComponent<T>({
     cell: header,
     padding: padding,
     skeleton: {
@@ -106,10 +134,10 @@ const Table = <T extends ScalarDict>({
       right: '│',
       cross: '│',
     },
-  })
+  }), [header, skeleton, padding])
 
   // The line that separates rows.
-  const Separator = createRowComponent<T>({
+  const Separator = useMemo(() => createRowComponent<T>({
     cell: skeleton,
     padding: padding,
     skeleton: {
@@ -120,10 +148,10 @@ const Table = <T extends ScalarDict>({
       right: '┤',
       cross: '┼',
     },
-  })
+  }), [header, skeleton, padding])
 
   // The row with the data.
-  const Data = createRowComponent<T>({
+  const Data = useMemo(() => createRowComponent<T>({
     cell,
     padding,
     skeleton: {
@@ -134,10 +162,10 @@ const Table = <T extends ScalarDict>({
       right: '│',
       cross: '│',
     },
-  })
+  }), [header, skeleton, padding])
 
   // The bottom most line of the table.
-  const Footer = createRowComponent<T>({
+  const Footer = useMemo(() => createRowComponent<T>({
     cell: skeleton,
     padding,
     skeleton: {
@@ -148,7 +176,7 @@ const Table = <T extends ScalarDict>({
       right: '┘',
       cross: '┴',
     },
-  })
+  }), [header, skeleton, padding])
   /**
    * Render the table line by line.
    */
@@ -188,32 +216,4 @@ const Table = <T extends ScalarDict>({
   )
 }
 
-/* Helper components */
-
-/**
- * Renders the header of a table.
- */
-export function Header(props: React.PropsWithChildren<{}>) {
-  return (
-    <Text bold color="blue">
-      {props.children}
-    </Text>
-  )
-}
-
-/**
- * Renders a cell in the table.
- */
-export function Cell(props: CellProps) {
-  return <Text>{props.children}</Text>
-}
-
-/**
- * Redners the scaffold of the table.
- */
-export function Skeleton(props: React.PropsWithChildren<{}>) {
-  return <Text bold>{props.children}</Text>
-}
-
-/* Utility functions */
 export default Table;

@@ -1,14 +1,9 @@
 import React from 'react'
 import { Box, Text } from 'ink'
 import { sha1 } from 'object-hash'
+import { ScalarDict } from './types'
+import { createRowComponent } from './createRowComponent';
 
-/* Table */
-
-type Scalar = string | number | boolean | null | undefined
-
-type ScalarDict = {
-  [key: string]: Scalar
-}
 
 export type CellProps = React.PropsWithChildren<{ column: number }>
 
@@ -44,27 +39,9 @@ export type TableProps<T extends ScalarDict> = {
 export default class Table<T extends ScalarDict> extends React.Component<
   Pick<TableProps<T>, 'data'> & Partial<TableProps<T>>
 > {
-  /* Config */
+  render() {
 
-  /**
-   * Merges provided configuration with defaults.
-   */
-  getConfig(): TableProps<T> {
-    return {
-      data: this.props.data,
-      columns: this.props.columns || this.getDataKeys(),
-      padding: this.props.padding || 1,
-      header: this.props.header || Header,
-      cell: this.props.cell || Cell,
-      skeleton: this.props.skeleton || Skeleton,
-    }
-  }
-
-  /**
-   * Gets all keyes used in data by traversing through the data.
-   */
-  getDataKeys(): (keyof T)[] {
-    let keys = new Set<keyof T>()
+    const keys = new Set<keyof T>()
 
     // Collect all the keys.
     for (const data of this.props.data) {
@@ -73,19 +50,21 @@ export default class Table<T extends ScalarDict> extends React.Component<
       }
     }
 
-    return Array.from(keys)
-  }
+    const config = {
+      data: this.props.data,
+      columns: this.props.columns || Array.from(keys),
+      padding: this.props.padding || 1,
+      header: this.props.header || Header,
+      cell: this.props.cell || Cell,
+      skeleton: this.props.skeleton || Skeleton,
+    };
 
-  /**
-   * Calculates the width of each column by finding
-   * the longest value in a cell of a particular column.
-   *
-   * Returns a list of column names and their widths.
-   */
-  getColumns(): Column<T>[] {
-    const { columns, padding } = this.getConfig()
+    const headings: Partial<T> = config.columns.reduce(
+      (acc, column) => ({ ...acc, [column]: column }),
+      {},
+    )
 
-    const widths: Column<T>[] = columns.map((key) => {
+    const columns = config.columns.map((key) => {
       const header = String(key).length
       /* Get the width of each cell in the column */
       const data = this.props.data.map((data) => {
@@ -95,7 +74,7 @@ export default class Table<T extends ScalarDict> extends React.Component<
         return String(value).length
       })
 
-      const width = Math.max(...data, header) + padding * 2
+      const width = Math.max(...data, header) + config.padding * 2
 
       /* Construct a cell */
       return {
@@ -105,110 +84,82 @@ export default class Table<T extends ScalarDict> extends React.Component<
       }
     })
 
-    return widths
-  }
+    // The top most line in the table.
+    const Top = createRowComponent<T>({
+      cell: config.skeleton,
+      padding: config.padding,
+      skeleton: {
+        component: config.skeleton,
+        // chars
+        line: '─',
+        left: '┌',
+        right: '┐',
+        cross: '┬',
+      },
+    })
 
-  /**
-   * Returns a (data) row representing the headings.
-   */
-  getHeadings(): Partial<T> {
-    const { columns } = this.getConfig()
+    // The line with column names.
+    const Heading = createRowComponent<T>({
+      cell: config.header,
+      padding: config.padding,
+      skeleton: {
+        component: config.skeleton,
+        // chars
+        line: ' ',
+        left: '│',
+        right: '│',
+        cross: '│',
+      },
+    })
 
-    const headings: Partial<T> = columns.reduce(
-      (acc, column) => ({ ...acc, [column]: column }),
-      {},
-    )
+    // The line that separates rows.
+    const Separator = createRowComponent<T>({
+      cell: config.skeleton,
+      padding: config.padding,
+      skeleton: {
+        component: config.skeleton,
+        // chars
+        line: '─',
+        left: '├',
+        right: '┤',
+        cross: '┼',
+      },
+    })
 
-    return headings
-  }
+    // The row with the data.
+    const Data = createRowComponent<T>({
+      cell: config.cell,
+      padding: config.padding,
+      skeleton: {
+        component: config.skeleton,
+        // chars
+        line: ' ',
+        left: '│',
+        right: '│',
+        cross: '│',
+      },
+    })
 
-  /* Rendering utilities */
-
-  // The top most line in the table.
-  header = row<T>({
-    cell: this.getConfig().skeleton,
-    padding: this.getConfig().padding,
-    skeleton: {
-      component: this.getConfig().skeleton,
-      // chars
-      line: '─',
-      left: '┌',
-      right: '┐',
-      cross: '┬',
-    },
-  })
-
-  // The line with column names.
-  heading = row<T>({
-    cell: this.getConfig().header,
-    padding: this.getConfig().padding,
-    skeleton: {
-      component: this.getConfig().skeleton,
-      // chars
-      line: ' ',
-      left: '│',
-      right: '│',
-      cross: '│',
-    },
-  })
-
-  // The line that separates rows.
-  separator = row<T>({
-    cell: this.getConfig().skeleton,
-    padding: this.getConfig().padding,
-    skeleton: {
-      component: this.getConfig().skeleton,
-      // chars
-      line: '─',
-      left: '├',
-      right: '┤',
-      cross: '┼',
-    },
-  })
-
-  // The row with the data.
-  data = row<T>({
-    cell: this.getConfig().cell,
-    padding: this.getConfig().padding,
-    skeleton: {
-      component: this.getConfig().skeleton,
-      // chars
-      line: ' ',
-      left: '│',
-      right: '│',
-      cross: '│',
-    },
-  })
-
-  // The bottom most line of the table.
-  footer = row<T>({
-    cell: this.getConfig().skeleton,
-    padding: this.getConfig().padding,
-    skeleton: {
-      component: this.getConfig().skeleton,
-      // chars
-      line: '─',
-      left: '└',
-      right: '┘',
-      cross: '┴',
-    },
-  })
-
-  /* Render */
-
-  render() {
-    /* Data */
-    const columns = this.getColumns()
-    const headings = this.getHeadings()
-
+    // The bottom most line of the table.
+    const Footer = createRowComponent<T>({
+      cell: config.skeleton,
+      padding: config.padding,
+      skeleton: {
+        component: config.skeleton,
+        // chars
+        line: '─',
+        left: '└',
+        right: '┘',
+        cross: '┴',
+      },
+    })
     /**
      * Render the table line by line.
      */
     return (
       <Box flexDirection="column">
-        {/* Header */}
-        {this.header({ key: 'header', columns, data: {} })}
-        {this.heading({ key: 'heading', columns, data: headings })}
+        <Top key="header" propKey="header" columns={columns} data={{}} />
+        <Heading key="heading" propKey="heading" columns={columns} data={headings} />
         {/* Data */}
         {this.props.data.map((row, index) => {
           // Calculate the hash of the row based on its value and position
@@ -217,13 +168,22 @@ export default class Table<T extends ScalarDict> extends React.Component<
           // Construct a row.
           return (
             <Box flexDirection="column" key={key}>
-              {this.separator({ key: `separator-${key}`, columns, data: {} })}
-              {this.data({ key: `data-${key}`, columns, data: row })}
+              <Separator
+                key={`separator-${key}`}
+                propKey={`separator-${key}`}
+                columns={columns}
+                data={{}}
+              />
+              <Data key={`data-${key}`} propKey={`data-${key}`} columns={columns} data={row} />
             </Box>
           )
         })}
-        {/* Footer */}
-        {this.footer({ key: 'footer', columns, data: {} })}
+        <Footer
+          key="footer"
+          propKey="footer"
+          columns={columns}
+          data={{}}
+        />
       </Box>
     )
   }
@@ -231,105 +191,6 @@ export default class Table<T extends ScalarDict> extends React.Component<
 
 /* Helper components */
 
-type RowConfig = {
-  /**
-   * Component used to render cells.
-   */
-  cell: (props: CellProps) => JSX.Element
-  /**
-   * Tells the padding of each cell.
-   */
-  padding: number
-  /**
-   * Component used to render skeleton in the row.
-   */
-  skeleton: {
-    component: (props: React.PropsWithChildren<{}>) => JSX.Element
-    /**
-     * Characters used in skeleton.
-     *    |             |
-     * (left)-(line)-(cross)-(line)-(right)
-     *    |             |
-     */
-    left: string
-    right: string
-    cross: string
-    line: string
-  }
-}
-
-type RowProps<T extends ScalarDict> = {
-  key: string
-  data: Partial<T>
-  columns: Column<T>[]
-}
-
-type Column<T> = {
-  key: string
-  column: keyof T
-  width: number
-}
-
-/**
- * Constructs a Row element from the configuration.
- */
-function row<T extends ScalarDict>(
-  config: RowConfig,
-): (props: RowProps<T>) => JSX.Element {
-  /* This is a component builder. We return a function. */
-
-  const skeleton = config.skeleton
-
-  /* Row */
-  return (props) => (
-    <Box flexDirection="row">
-      {/* Left */}
-      <skeleton.component>{skeleton.left}</skeleton.component>
-      {/* Data */}
-      {...intersperse(
-        (i) => {
-          const key = `${props.key}-hseparator-${i}`
-
-          // The horizontal separator.
-          return (
-            <skeleton.component key={key}>{skeleton.cross}</skeleton.component>
-          )
-        },
-
-        // Values.
-        props.columns.map((column, colI) => {
-          // content
-          const value = props.data[column.column]
-
-          if (value == undefined || value == null) {
-            const key = `${props.key}-empty-${column.key}`
-
-            return (
-              <config.cell key={key} column={colI}>
-                {skeleton.line.repeat(column.width)}
-              </config.cell>
-            )
-          } else {
-            const key = `${props.key}-cell-${column.key}`
-
-            // margins
-            const ml = config.padding
-            const mr = column.width - String(value).length - config.padding
-
-            return (
-              /* prettier-ignore */
-              <config.cell key={key} column={colI}>
-                {`${skeleton.line.repeat(ml)}${String(value)}${skeleton.line.repeat(mr)}`}
-              </config.cell>
-            )
-          }
-        }),
-      )}
-      {/* Right */}
-      <skeleton.component>{skeleton.right}</skeleton.component>
-    </Box>
-  )
-}
 
 /**
  * Renders the header of a table.
@@ -358,20 +219,3 @@ export function Skeleton(props: React.PropsWithChildren<{}>) {
 
 /* Utility functions */
 
-/**
- * Intersperses a list of elements with another element.
- */
-function intersperse<T, I>(
-  intersperser: (index: number) => I,
-  elements: T[],
-): (T | I)[] {
-  // Intersparse by reducing from left.
-  let interspersed: (T | I)[] = elements.reduce((acc, element, index) => {
-    // Only add element if it's the first one.
-    if (acc.length === 0) return [element]
-    // Add the intersparser as well otherwise.
-    return [...acc, intersperser(index), element]
-  }, [] as (T | I)[])
-
-  return interspersed
-}

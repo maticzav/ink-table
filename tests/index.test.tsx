@@ -19,8 +19,7 @@ const Custom = ({ children }: React.PropsWithChildren<{}>) => (
 const custom = (v: string) => <Custom>{v}</Custom>
 
 // Tests ---------------------------------------------------------------------
-
-test('Renders table.', () => {
+test('Renders table aoisdjoiajsdo.', () => {
   const data = [{ name: 'Foo' }]
 
   const { lastFrame: actual } = render(<Table data={data} />)

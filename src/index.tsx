@@ -73,13 +73,13 @@ export function Skeleton(props: React.PropsWithChildren<{}>) {
   return <Text bold>{props.children}</Text>
 }
 
-export const Table: FC<{
-  data: { [key: string]: any }[];
-  columns?: string[];
-  padding?: number;
-  header?: (props: React.PropsWithChildren<{}>) => JSX.Element;
-  cell?: (props: CellProps) => JSX.Element;
-  skeleton?: (props: React.PropsWithChildren<{}>) => JSX.Element;
+const Table: FC<{
+  data: { [key: string]: any }[]
+  columns?: string[]
+  padding?: number
+  header?: (props: React.PropsWithChildren<{}>) => JSX.Element
+  cell?: (props: CellProps) => JSX.Element
+  skeleton?: (props: React.PropsWithChildren<{}>) => JSX.Element
 }> = ({
   data,
   columns: columnNames = getDataKeys(data),
@@ -245,3 +245,5 @@ export const Table: FC<{
       </Box>
     )
   }
+
+export default Table

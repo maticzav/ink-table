@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Text } from 'ink'
 import { render } from 'ink-testing-library'
 
-import Table, { Header, Skeleton, Cell } from '../src'
+import { Table, Header, Skeleton, Cell } from '../src'
 
 // Helpers -------------------------------------------------------------------
 
@@ -19,7 +19,6 @@ const Custom = ({ children }: React.PropsWithChildren<{}>) => (
 const custom = (v: string) => <Custom>{v}</Custom>
 
 // Tests ---------------------------------------------------------------------
-
 test('Renders table.', () => {
   const data = [{ name: 'Foo' }]
 

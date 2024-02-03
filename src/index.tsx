@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { FC, useMemo } from 'react'
 import { Box, Text } from 'ink'
 import { sha1 } from 'object-hash'
 import { ScalarDict } from './types'
@@ -43,7 +43,7 @@ const getDataKeys = <T extends ScalarDict>(dataList: T[]) => {
     }
   }
 
-  return Array.from(keys);
+  return Array.from(keys)
 }
 
 /* Helper components */
@@ -73,145 +73,175 @@ export function Skeleton(props: React.PropsWithChildren<{}>) {
   return <Text bold>{props.children}</Text>
 }
 
-
-export const Table = <T extends ScalarDict>({
+export const Table: FC<{
+  data: { [key: string]: any }[];
+  columns?: string[];
+  padding?: number;
+  header?: (props: React.PropsWithChildren<{}>) => JSX.Element;
+  cell?: (props: CellProps) => JSX.Element;
+  skeleton?: (props: React.PropsWithChildren<{}>) => JSX.Element;
+}> = ({
   data,
   columns: columnNames = getDataKeys(data),
   padding = 1,
   header = Header,
   cell = Cell,
   skeleton = Skeleton,
-}: TableProps<T>) => {
+}) => {
+    const headings = useMemo(
+      () =>
+        columnNames.reduce((acc, column) => ({ ...acc, [column]: column }), {}),
+      columnNames,
+    )
 
-  const headings: Partial<T> = useMemo(() => columnNames.reduce(
-    (acc, column) => ({ ...acc, [column]: column }),
-    {},
-  ), columnNames);
+    const columnConfigs = useMemo(
+      () =>
+        columnNames.map((key) => {
+          const header = String(key).length
+          /* Get the width of each cell in the column */
+          const dataValues = data.map((data) => {
+            const value = data[key]
 
-  const columnConfigs = useMemo(() => columnNames.map((key) => {
-    const header = String(key).length
-    /* Get the width of each cell in the column */
-    const dataValues = data.map((data) => {
-      const value = data[key]
+            if (value == undefined || value == null) return 0
+            return String(value).length
+          })
 
-      if (value == undefined || value == null) return 0
-      return String(value).length
-    })
+          const width = Math.max(...dataValues, header) + padding * 2
 
-    const width = Math.max(...dataValues, header) + padding * 2
+          /* Construct a cell */
+          return {
+            column: key,
+            width: width,
+            key: String(key),
+          }
+        }),
+      columnNames,
+    )
 
-    /* Construct a cell */
-    return {
-      column: key,
-      width: width,
-      key: String(key),
-    }
-  }), columnNames)
+    // The top most line in the table.
+    const Top = useMemo(
+      () =>
+        createRowComponent({
+          cell: skeleton,
+          padding: padding,
+          skeleton: {
+            component: skeleton,
+            // chars
+            line: '─',
+            left: '┌',
+            right: '┐',
+            cross: '┬',
+          },
+        }),
+      [header, skeleton, padding],
+    )
 
-  // The top most line in the table.
-  const Top = useMemo(() => createRowComponent<T>({
-    cell: skeleton,
-    padding: padding,
-    skeleton: {
-      component: skeleton,
-      // chars
-      line: '─',
-      left: '┌',
-      right: '┐',
-      cross: '┬',
-    },
-  }), [header, skeleton, padding])
+    // The line with column names.
+    const Heading = useMemo(
+      () =>
+        createRowComponent({
+          cell: header,
+          padding: padding,
+          skeleton: {
+            component: skeleton,
+            // chars
+            line: ' ',
+            left: '│',
+            right: '│',
+            cross: '│',
+          },
+        }),
+      [header, skeleton, padding],
+    )
 
-  // The line with column names.
-  const Heading = useMemo(() => createRowComponent<T>({
-    cell: header,
-    padding: padding,
-    skeleton: {
-      component: skeleton,
-      // chars
-      line: ' ',
-      left: '│',
-      right: '│',
-      cross: '│',
-    },
-  }), [header, skeleton, padding])
+    // The line that separates rows.
+    const Separator = useMemo(
+      () =>
+        createRowComponent({
+          cell: skeleton,
+          padding: padding,
+          skeleton: {
+            component: skeleton,
+            // chars
+            line: '─',
+            left: '├',
+            right: '┤',
+            cross: '┼',
+          },
+        }),
+      [header, skeleton, padding],
+    )
 
-  // The line that separates rows.
-  const Separator = useMemo(() => createRowComponent<T>({
-    cell: skeleton,
-    padding: padding,
-    skeleton: {
-      component: skeleton,
-      // chars
-      line: '─',
-      left: '├',
-      right: '┤',
-      cross: '┼',
-    },
-  }), [header, skeleton, padding])
+    // The row with the data.
+    const Data = useMemo(
+      () =>
+        createRowComponent({
+          cell,
+          padding,
+          skeleton: {
+            component: skeleton,
+            // chars
+            line: ' ',
+            left: '│',
+            right: '│',
+            cross: '│',
+          },
+        }),
+      [header, skeleton, padding],
+    )
 
-  // The row with the data.
-  const Data = useMemo(() => createRowComponent<T>({
-    cell,
-    padding,
-    skeleton: {
-      component: skeleton,
-      // chars
-      line: ' ',
-      left: '│',
-      right: '│',
-      cross: '│',
-    },
-  }), [header, skeleton, padding])
+    // The bottom most line of the table.
+    const Footer = useMemo(
+      () =>
+        createRowComponent({
+          cell: skeleton,
+          padding,
+          skeleton: {
+            component: skeleton,
+            // chars
+            line: '─',
+            left: '└',
+            right: '┘',
+            cross: '┴',
+          },
+        }),
+      [header, skeleton, padding],
+    )
+    /**
+     * Render the table line by line.
+     */
+    return (
+      <Box flexDirection="column">
+        <Top key="header" propKey="header" columns={columnConfigs} data={{}} />
+        <Heading
+          key="heading"
+          propKey="heading"
+          columns={columnConfigs}
+          data={headings}
+        />
+        {data.map((row, index) => {
+          // Calculate the hash of the row based on its value and position
+          const key = `row-${sha1(row)}-${index}`
 
-  // The bottom most line of the table.
-  const Footer = useMemo(() => createRowComponent<T>({
-    cell: skeleton,
-    padding,
-    skeleton: {
-      component: skeleton,
-      // chars
-      line: '─',
-      left: '└',
-      right: '┘',
-      cross: '┴',
-    },
-  }), [header, skeleton, padding])
-  /**
-   * Render the table line by line.
-   */
-  return (
-    <Box flexDirection="column">
-      <Top key="header" propKey="header" columns={columnConfigs} data={{}} />
-      <Heading
-        key="heading"
-        propKey="heading"
-        columns={columnConfigs}
-        data={headings}
-      />
-      {data.map((row, index) => {
-        // Calculate the hash of the row based on its value and position
-        const key = `row-${sha1(row)}-${index}`
-
-        // Construct a row.
-        return (
-          <Box flexDirection="column" key={key}>
-            <Separator
-              key={`separator-${key}`}
-              propKey={`separator-${key}`}
-              columns={columnConfigs}
-              data={{}}
-            />
-            <Data
-              key={`data-${key}`}
-              propKey={`data-${key}`}
-              columns={columnConfigs}
-              data={row}
-            />
-          </Box>
-        )
-      })}
-      <Footer key="footer" propKey="footer" columns={columnConfigs} data={{}} />
-    </Box>
-  )
-}
+          // Construct a row.
+          return (
+            <Box flexDirection="column" key={key}>
+              <Separator
+                key={`separator-${key}`}
+                propKey={`separator-${key}`}
+                columns={columnConfigs}
+                data={{}}
+              />
+              <Data
+                key={`data-${key}`}
+                propKey={`data-${key}`}
+                columns={columnConfigs}
+                data={row}
+              />
+            </Box>
+          )
+        })}
+        <Footer key="footer" propKey="footer" columns={columnConfigs} data={{}} />
+      </Box>
+    )
+  }

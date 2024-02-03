@@ -74,7 +74,7 @@ export function Skeleton(props: React.PropsWithChildren<{}>) {
 }
 
 
-const Table = <T extends ScalarDict>({
+export const Table = <T extends ScalarDict>({
   data,
   columns: columnNames = getDataKeys(data),
   padding = 1,
@@ -215,5 +215,3 @@ const Table = <T extends ScalarDict>({
     </Box>
   )
 }
-
-export default Table;

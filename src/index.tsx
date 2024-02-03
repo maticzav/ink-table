@@ -6,33 +6,6 @@ import { createRowComponent } from './createRowComponent'
 
 export type CellProps = React.PropsWithChildren<{ column: number }>
 
-export type TableProps<T extends ScalarDict> = {
-  /**
-   * List of values (rows).
-   */
-  data: T[]
-  /**
-   * Columns that we should display in the table.
-   */
-  columns?: (keyof T)[]
-  /**
-   * Cell padding.
-   */
-  padding?: number
-  /**
-   * Header component.
-   */
-  header?: (props: React.PropsWithChildren<{}>) => JSX.Element
-  /**
-   * Component used to render a cell in the table.
-   */
-  cell?: (props: CellProps) => JSX.Element
-  /**
-   * Component used to render the skeleton of the table.
-   */
-  skeleton?: (props: React.PropsWithChildren<{}>) => JSX.Element
-}
-
 const getDataKeys = <T extends ScalarDict>(dataList: T[]) => {
   const keys = new Set<keyof T>()
 
@@ -45,8 +18,6 @@ const getDataKeys = <T extends ScalarDict>(dataList: T[]) => {
 
   return Array.from(keys)
 }
-
-/* Helper components */
 
 /**
  * Renders the header of a table.

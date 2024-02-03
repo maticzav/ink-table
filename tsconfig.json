@@ -4,12 +4,12 @@
     "outDir": "dist",
 
     "target": "es2019",
-    "module": "commonjs",
+    "module": "Node16",
     "lib": ["dom", "es2017", "es2019"],
     "declaration": true,
     "declarationMap": true,
-    // "importHelpers": true,
-    // "isolatedModules": true,
+    "importHelpers": true,
+    "isolatedModules": true,
 
     "jsx": "react",
 
@@ -23,7 +23,7 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Module Resolution Options */
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true

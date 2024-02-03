@@ -1,11 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createRowComponent = void 0;
+const tslib_1 = require("tslib");
 const ink_1 = require("ink");
-const react_1 = __importDefault(require("react"));
+const react_1 = tslib_1.__importDefault(require("react"));
 /**
  * Intersperses a list of elements with another element.
  */

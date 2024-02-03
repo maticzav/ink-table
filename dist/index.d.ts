@@ -41,7 +41,7 @@ export declare function Cell(props: CellProps): React.JSX.Element;
  * Redners the scaffold of the table.
  */
 export declare function Skeleton(props: React.PropsWithChildren<{}>): React.JSX.Element;
-export declare const Table: FC<{
+declare const Table: FC<{
     data: {
         [key: string]: any;
     }[];
@@ -51,4 +51,5 @@ export declare const Table: FC<{
     cell?: (props: CellProps) => JSX.Element;
     skeleton?: (props: React.PropsWithChildren<{}>) => JSX.Element;
 }>;
+export default Table;
 //# sourceMappingURL=index.d.ts.map

@@ -587,10 +587,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
-"@types/react@16.14.60":
-  version "16.14.60"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.60.tgz#f7ab62a329b82826f12d02bc8031d4ef4b5e0d81"
-  integrity sha512-wIFmnczGsTcgwCBeIYOuy2mdXEiKZ5znU/jNOnMZPQyCcIxauMGWlX0TNG4lZ7NxRKj7YUIZRneJQSSdB2jKgg==
+"@types/react@16.14.61":
+  version "16.14.61"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.61.tgz#ce498029a046d17908001e6e563f3febbaf41e7f"
+  integrity sha512-CK3zd17pDWAEMnN5TdzwQJQlto2dK/lb0WZsI74owWgQ8PR60WRk0sCeBxLWuSuuqqDZKqeUcxod/8yECqrP/g==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "^0.16"

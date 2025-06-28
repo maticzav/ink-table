@@ -2,6 +2,8 @@ import React from 'react'
 import { Box, Text } from 'ink'
 import { render } from 'ink-testing-library'
 
+import stringWidth from 'string-width';
+
 import Table, { Header, Skeleton, Cell } from '../src'
 
 // Helpers -------------------------------------------------------------------
@@ -477,6 +479,86 @@ test('Renders table with custom skeleton.', () => {
         {custom('──────')}
         {custom('┴')}
         {custom('─────')}
+        {custom('┘')}
+      </Box>
+    </>,
+  )
+
+  expect(actual()).toBe(expected())
+})
+
+test('Renders table with wide characters.', () => {
+  const data = [
+    { name: '全角', width: 4 },
+    { name: 'ﾊﾝｶｸ', width: 4 },
+    { name: '😀', width: 2 },
+  ]
+
+  const { lastFrame: actual } = render(<Table data={data} skeleton={Custom} />)
+
+  const { lastFrame: expected } = render(
+    <>
+      <Box>
+        {custom('┌')}
+        {custom('──────')}
+        {custom('┬')}
+        {custom('───────')}
+        {custom('┐')}
+      </Box>
+      <Box>
+        {custom('│')}
+        {header(' name ')}
+        {custom('│')}
+        {header(' width ')}
+        {custom('│')}
+      </Box>
+      <Box>
+        {custom('├')}
+        {custom('──────')}
+        {custom('┼')}
+        {custom('───────')}
+        {custom('┤')}
+      </Box>
+      <Box>
+        {custom('│')}
+        {cell(' 全角 ')}
+        {custom('│')}
+        {cell(' 4     ')}
+        {custom('│')}
+      </Box>
+      <Box>
+        {custom('├')}
+        {custom('──────')}
+        {custom('┼')}
+        {custom('───────')}
+        {custom('┤')}
+      </Box>
+      <Box>
+        {custom('│')}
+        {cell(' ﾊﾝｶｸ ')}
+        {custom('│')}
+        {cell(' 4     ')}
+        {custom('│')}
+      </Box>
+      <Box>
+        {custom('├')}
+        {custom('──────')}
+        {custom('┼')}
+        {custom('───────')}
+        {custom('┤')}
+      </Box>
+      <Box>
+        {custom('│')}
+        {cell(' 😀   ')}
+        {custom('│')}
+        {cell(' 2     ')}
+        {custom('│')}
+      </Box>
+      <Box>
+        {custom('└')}
+        {custom('──────')}
+        {custom('┴')}
+        {custom('───────')}
         {custom('┘')}
       </Box>
     </>,

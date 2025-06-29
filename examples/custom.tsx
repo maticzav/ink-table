@@ -2,7 +2,7 @@ import React from 'react'
 import { Text } from 'ink'
 import { render } from 'ink-testing-library'
 
-import Table from '../src'
+import Table from '../dist/index.js'
 
 // Components ----------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'ink'
 
-import Table from '../src'
+import Table from '../dist/index.js'
 
 const data = [
   {

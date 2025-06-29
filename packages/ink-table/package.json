@@ -1,0 +1,43 @@
+{
+  "name": "ink-table",
+  "version": "0.0.0-development",
+  "description": "A table component for Ink.",
+  "main": "dist/index.js",
+  "type": "module",
+  "repository": "maticzav/ink-table",
+  "author": "Matic Zavadlal <matic.zavadlal@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -w",
+    "test": "vitest"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "cli",
+    "ink-cli",
+    "ink",
+    "table",
+    "ink-table",
+    "ink-component",
+    "component"
+  ],
+  "dependencies": {
+    "object-hash": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "@types/object-hash": "^1.3.4",
+    "@types/react": "^19.1.8",
+    "ink": "^6.0.1",
+    "ink-testing-library": "2.1.0",
+    "react": "^19.1.0",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "ink": ">=6.0.1",
+    "react": ">=19.1.0"
+  },
+  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
+}

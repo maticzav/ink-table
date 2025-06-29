@@ -1,0 +1,24 @@
+{
+	"$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+	"bump-minor-pre-major": true,
+	"bump-patch-for-minor-pre-major": true,
+	"pull-request-title-pattern": "chore: release ${component} v${version}",
+	"include-component-in-tag": true,
+	"tag-separator": "/",
+	"changelog-sections": [
+		{ "type": "feat", "section": "Features" },
+		{ "type": "fix", "section": "Bug Fixes" },
+		{ "type": "docs", "section": "Documentation" },
+		{ "type": "perf", "section": "Performance" },
+		{ "type": "chore", "section": "Miscellaneous" },
+		{ "type": "refactor", "section": "Internal" },
+		{ "type": "test", "section": "Internal" }
+	],
+
+	"packages": {
+		"packages/ink-table": {
+			"release-type": "node"
+		}
+	},
+	"plugins": [{ "type": "sentence-case" }]
+}

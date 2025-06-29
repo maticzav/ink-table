@@ -1,0 +1,85 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Renders table with custom cell. 1`] = `
+"
+┌─────┬──────┐
+│ age │ name │
+├─────┼──────┤
+│ 12  │ Foo  │
+├─────┼──────┤
+│ 15  │ Bar  │
+└─────┴──────┘"
+`;
+
+exports[`Renders table with custom header. 1`] = `
+"
+┌─────┬──────┐
+│ age │ name │
+├─────┼──────┤
+│ 12  │ Foo  │
+├─────┼──────┤
+│ 15  │ Bar  │
+└─────┴──────┘"
+`;
+
+exports[`Renders table with custom padding. 1`] = `
+"
+┌─────────┬──────────┐
+│   age   │   name   │
+├─────────┼──────────┤
+│   12    │   Foo    │
+├─────────┼──────────┤
+│   15    │   Bar    │
+└─────────┴──────────┘"
+`;
+
+exports[`Renders table with custom skeleton. 1`] = `
+"
+┌─────┬──────┐
+│ age │ name │
+├─────┼──────┤
+│ 12  │ Foo  │
+├─────┼──────┤
+│ 15  │ Bar  │
+└─────┴──────┘"
+`;
+
+exports[`Renders table with multiple rows. 1`] = `
+"
+┌─────┬──────┐
+│ age │ name │
+├─────┼──────┤
+│ 12  │ Foo  │
+├─────┼──────┤
+│ 0   │ Bar  │
+└─────┴──────┘"
+`;
+
+exports[`Renders table with numbers. 1`] = `
+"
+┌─────┬──────┐
+│ age │ name │
+├─────┼──────┤
+│ 12  │ Foo  │
+└─────┴──────┘"
+`;
+
+exports[`Renders table with undefined value. 1`] = `
+"
+┌──────┬─────┐
+│ name │ age │
+├──────┼─────┤
+│ Foo  │     │
+├──────┼─────┤
+│ Bar  │ 15  │
+└──────┴─────┘"
+`;
+
+exports[`Renders table. 1`] = `
+"
+┌──────┐
+│ name │
+├──────┤
+│ Foo  │
+└──────┘"
+`;

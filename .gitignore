@@ -12,9 +12,6 @@
 **/build
 **/dist
 **/lib
-__temp__
-.docusaurus
-.vercel
 
 # misc
 .DS_Store

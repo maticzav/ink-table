@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Text } from 'ink'
 import { sha1 } from 'object-hash'
+import stringWidth from 'string-width'
 
 /* Table */
 
@@ -86,13 +87,13 @@ export default class Table<T extends ScalarDict> extends React.Component<
     const { columns, padding } = this.getConfig()
 
     const widths: Column<T>[] = columns.map((key) => {
-      const header = String(key).length
+      const header = stringWidth(String(key))
       /* Get the width of each cell in the column */
       const data = this.props.data.map((data) => {
         const value = data[key]
 
         if (value == undefined || value == null) return 0
-        return String(value).length
+        return stringWidth(String(value))
       })
 
       const width = Math.max(...data, header) + padding * 2
@@ -314,7 +315,7 @@ function row<T extends ScalarDict>(
 
             // margins
             const ml = config.padding
-            const mr = column.width - String(value).length - config.padding
+            const mr = column.width - stringWidth(String(value)) - config.padding
 
             return (
               /* prettier-ignore */

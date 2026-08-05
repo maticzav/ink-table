@@ -24,7 +24,8 @@
     "component"
   ],
   "dependencies": {
-    "object-hash": "^2.0.3"
+    "object-hash": "^2.0.3",
+    "string-width": "^4.2.3"
   },
   "devDependencies": {
     "@types/jest": "26.0.24",
